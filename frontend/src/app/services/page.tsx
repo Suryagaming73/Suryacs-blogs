@@ -1,49 +1,26 @@
 import { Metadata } from 'next'
-import { Monitor, ShoppingBag, PieChart, Sparkles, Target, ArrowRight } from 'lucide-react'
+import { Briefcase, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { db } from '@/db'
+import { services } from '@/db/schema'
+import { asc } from 'drizzle-orm'
 
 export const metadata: Metadata = {
   title: 'Services | Surya CS Portfolio',
   description: 'Professional web development services including business websites, e-commerce stores, SaaS dashboards, and AI solutions.',
 }
 
-const services = [
-  {
-    title: 'Business Websites & Landing Pages',
-    icon: <Monitor size={32} color="#6c5ce7" />,
-    desc: 'High-performance, responsive websites built with Next.js and React that capture attention and drive conversions. Perfect for agencies, portfolios, and corporate sites.',
-  },
-  {
-    title: 'E-commerce Stores',
-    icon: <ShoppingBag size={32} color="#a855f7" />,
-    desc: 'Custom e-commerce platforms featuring seamless user experiences, fast load times, and secure checkout processes to maximize your online sales.',
-  },
-  {
-    title: 'SaaS Dashboards & CRM Systems',
-    icon: <PieChart size={32} color="#10b981" />,
-    desc: 'Complex, data-driven applications tailored to your business logic. Role-based access control, real-time analytics, and automated workflows.',
-  },
-  {
-    title: 'AI Solutions & Content Creation',
-    icon: <Sparkles size={32} color="#f59e0b" />,
-    desc: 'Innovative AI integrations, including AI Face Swap tools, automated content generation, and promo videos to elevate your digital marketing strategy.',
-  },
-  {
-    title: 'Google Business Profile Optimization',
-    icon: <Target size={32} color="#ec4899" />,
-    desc: 'Enhance your local search presence. I help optimize your GBP to attract more local customers and build a trustworthy online reputation.',
-  }
-]
+export default async function ServicesPage() {
+  const dbServices = await db.select().from(services).orderBy(asc(services.order), asc(services.title))
 
-export default function ServicesPage() {
   return (
     <div>
       <section className="section" style={{ background: 'var(--bg-alt)' }}>
         <div className="container-sm" style={{ textAlign: 'center' }}>
-          <div className="section-tag"><Sparkles size={12} /> What I Do</div>
-          <h1 className="section-title font-heading">Professional Services</h1>
+          <div className="section-tag"><Briefcase size={12} /> Services</div>
+          <h1 className="section-title font-heading">Professional Offerings</h1>
           <p className="section-desc">
-            Leveraging modern web technologies to architect digital solutions that drive business improvement and operational efficiency.
+            End-to-end solutions tailored to your business needs, from stunning landing pages to full-scale SaaS applications.
           </p>
         </div>
       </section>
@@ -51,13 +28,13 @@ export default function ServicesPage() {
       <section className="section">
         <div className="container">
           <div className="grid grid-cols-3" style={{ gap: '2rem' }}>
-            {services.map((service, i) => (
-              <div key={i} className="card" style={{ padding: '2.5rem', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ marginBottom: '1.5rem', display: 'inline-flex', padding: '1rem', background: 'var(--bg-alt)', borderRadius: 'var(--radius-sm)' }}>
+            {dbServices.map(service => (
+              <div key={service.title} className="card" style={{ padding: '2.5rem 2rem', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--bg-alt)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', marginBottom: '1.5rem', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)' }}>
                   {service.icon}
                 </div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem' }}>{service.title}</h3>
-                <p className="text-muted" style={{ lineHeight: 1.6, flexGrow: 1 }}>{service.desc}</p>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1rem', fontFamily: 'Outfit, sans-serif' }}>{service.title}</h3>
+                <p className="text-muted" style={{ lineHeight: 1.6, fontSize: '0.95rem' }}>{service.desc}</p>
               </div>
             ))}
             

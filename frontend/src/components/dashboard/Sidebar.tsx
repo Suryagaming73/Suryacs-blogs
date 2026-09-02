@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
 import {
   LayoutDashboard, FileText, PlusCircle, Tag, FolderOpen,
-  MessageSquare, Users, BarChart2, Mail, Inbox, Settings, LogOut
+  MessageSquare, Users, BarChart2, Mail, Inbox, Settings, LogOut,
+  Layers, Briefcase
 } from 'lucide-react'
 
 const sections = [
@@ -22,6 +23,13 @@ const sections = [
       { href: '/dashboard/posts/new', icon: PlusCircle, label: 'New Post' },
       { href: '/dashboard/categories', icon: FolderOpen, label: 'Categories' },
       { href: '/dashboard/tags', icon: Tag, label: 'Tags' },
+    ],
+  },
+  {
+    title: 'Portfolio',
+    items: [
+      { href: '/dashboard/projects', icon: Layers, label: 'Projects' },
+      { href: '/dashboard/services', icon: Briefcase, label: 'Services' },
     ],
   },
   {

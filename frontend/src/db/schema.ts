@@ -113,6 +113,28 @@ export const contactMessages = sqliteTable('contact_messages', {
   createdAt: text('created_at').$defaultFn(() => new Date().toISOString()),
 })
 
+// ─── Projects ───────────────────────────────────────────────────────────────────
+export const projects = sqliteTable('projects', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text('name').notNull(),
+  tech: text('tech').notNull(),
+  desc: text('desc').notNull(),
+  link: text('link'),
+  icon: text('icon').default('📁'),
+  order: integer('order').default(0),
+  createdAt: text('created_at').$defaultFn(() => new Date().toISOString()),
+})
+
+// ─── Services ─────────────────────────────────────────────────────────────────
+export const services = sqliteTable('services', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: text('title').notNull(),
+  desc: text('desc').notNull(),
+  icon: text('icon').default('✨'),
+  order: integer('order').default(0),
+  createdAt: text('created_at').$defaultFn(() => new Date().toISOString()),
+})
+
 // ─── Type Exports ─────────────────────────────────────────────────────────────
 export type User = typeof users.$inferSelect
 export type Post = typeof posts.$inferSelect
@@ -123,3 +145,5 @@ export type PostLike = typeof postLikes.$inferSelect
 export type Subscriber = typeof subscribers.$inferSelect
 export type ContactMessage = typeof contactMessages.$inferSelect
 export type PostSeries = typeof postSeries.$inferSelect
+export type Project = typeof projects.$inferSelect
+export type Service = typeof services.$inferSelect
