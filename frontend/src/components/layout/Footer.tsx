@@ -6,6 +6,8 @@ import { MessageCircle, Code, Rss, Mail } from 'lucide-react'
 const links = {
   platform: [
     { href: '/', label: 'Home' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/services', label: 'Services' },
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
@@ -47,9 +49,9 @@ export function Footer() {
         <div className="footer-grid">
           {/* Brand */}
           <div>
-            <div className="footer-brand-name">BlogCraft</div>
+            <div className="footer-brand-name">Surya CS</div>
             <p className="footer-brand-desc">
-              Your go-to source for the latest news, insights, and updates. Stay informed with quality content, curated just for you.
+              Full-Stack Web Developer & AI Content Creator. Crafting high-performance digital experiences and intelligent web solutions.
             </p>
             <form className="footer-newsletter" onSubmit={subscribe}>
               <input
@@ -88,11 +90,10 @@ export function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} BlogCraft. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Surya CS. All rights reserved.</span>
           <div className="flex gap-3">
-            <a href="#" className="footer-link" aria-label="RSS Feed"><Rss size={16} /></a>
-            <a href="#" className="footer-link" aria-label="Twitter"><MessageCircle size={16} /></a>
-            <a href="#" className="footer-link" aria-label="GitHub"><Code size={16} /></a>
+            <a href="https://linkedin.com/in/suryacs22" target="_blank" rel="noreferrer" className="footer-link" aria-label="LinkedIn"><MessageCircle size={16} /></a>
+            <a href="https://github.com/Surya200622" target="_blank" rel="noreferrer" className="footer-link" aria-label="GitHub"><Code size={16} /></a>
           </div>
         </div>
       </div>

@@ -8,8 +8,8 @@ import { ArrowRight, Sparkles, TrendingUp, Zap, Mail } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'BlogCraft — Latest News & Insights',
-  description: 'Your go-to source for the latest news, insights, and updates. Stay informed with quality content.',
+  title: 'Surya CS | Full-Stack Web Developer & AI Content Creator',
+  description: 'Portfolio and blog of Surya CS. Discover projects, services, and the latest insights in web development and AI.',
 }
 
 async function getData() {
@@ -59,20 +59,20 @@ export default async function HomePage() {
         <div className="container">
           <div className="hero-content">
             <div className="hero-eyebrow">
-              <Sparkles size={14} /> Your Daily Dose of Insights
+              <Sparkles size={14} /> Full-Stack Web Developer & AI Content Creator
             </div>
             <h1 className="hero-title">
-              Stay <span className="gradient-text">Informed</span> &amp; Inspired
+              Hi, I&apos;m <span className="gradient-text">Surya CS</span>
             </h1>
             <p className="hero-desc">
-              Discover the latest news, deep-dive articles, and curated updates — all in one beautiful place.
+              I build high-performance web applications, dynamic e-commerce platforms, and intelligent digital solutions to solve complex business challenges.
             </p>
             <div className="hero-actions">
-              <Link href="/blog" className="btn btn-primary btn-lg">
-                <Zap size={18} /> Explore Articles
+              <Link href="/projects" className="btn btn-primary btn-lg">
+                <Zap size={18} /> View My Work
               </Link>
-              <Link href="/about" className="btn btn-ghost btn-lg">
-                Learn More <ArrowRight size={16} />
+              <Link href="/contact" className="btn btn-ghost btn-lg">
+                Hire Me <ArrowRight size={16} />
               </Link>
             </div>
 
@@ -151,16 +151,18 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ── Newsletter CTA ──────────────────── */}
+      {/* ── CTA ──────────────────── */}
       <section style={{ padding: '5rem 0', background: 'var(--bg-alt)' }}>
         <div className="container-sm" style={{ textAlign: 'center' }}>
           <div className="card" style={{ padding: '3rem 2rem' }}>
-            <Mail size={48} style={{ margin: '0 auto 1.5rem', color: 'var(--accent)', opacity: 0.8 }} />
-            <h2 className="section-title font-heading">Never Miss a Story</h2>
+            <Zap size={48} style={{ margin: '0 auto 1.5rem', color: 'var(--accent)', opacity: 0.8 }} />
+            <h2 className="section-title font-heading">Let&apos;s Work Together</h2>
             <p className="section-desc" style={{ marginBottom: '2rem' }}>
-              Subscribe to our newsletter and get the best articles delivered straight to your inbox.
+              Have a project in mind or need a reliable full-stack developer? Feel free to reach out. I&apos;m currently open to new opportunities!
             </p>
-            <NewsletterInline />
+            <Link href="/contact" className="btn btn-primary btn-lg" style={{ display: 'inline-flex' }}>
+              <Mail size={18} /> Get in Touch
+            </Link>
           </div>
         </div>
       </section>
@@ -168,13 +170,4 @@ export default async function HomePage() {
   )
 }
 
-function NewsletterInline() {
-  'use client'
-  // This is a Server Component page, so newsletter form is in Footer already.
-  // We just show a link here.
-  return (
-    <Link href="/contact" className="btn btn-primary btn-lg" style={{ display: 'inline-flex' }}>
-      <Mail size={18} /> Get in Touch
-    </Link>
-  )
-}
+

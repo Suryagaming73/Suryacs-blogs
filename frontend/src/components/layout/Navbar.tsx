@@ -8,6 +8,8 @@ import { getInitials } from '@/lib/utils'
 
 const navLinks = [
   { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/services', label: 'Services' },
   { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -25,7 +27,7 @@ export function Navbar() {
       <div className="navbar-inner">
         {/* Logo */}
         <Link href="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
-          BlogCraft
+          Surya CS
         </Link>
 
         {/* Desktop Links */}
