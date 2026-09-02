@@ -135,6 +135,12 @@ export const services = sqliteTable('services', {
   createdAt: text('created_at').$defaultFn(() => new Date().toISOString()),
 })
 
+// ─── Settings ───────────────────────────────────────────────────────────────────
+export const settings = sqliteTable('settings', {
+  key: text('key').primaryKey(),
+  value: text('value').notNull(),
+})
+
 // ─── Type Exports ─────────────────────────────────────────────────────────────
 export type User = typeof users.$inferSelect
 export type Post = typeof posts.$inferSelect

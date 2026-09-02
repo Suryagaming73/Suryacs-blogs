@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { MessageCircle, Code, Rss, Mail } from 'lucide-react'
+import { Code, Mail, Linkedin, Github, Twitter, Facebook, Youtube } from 'lucide-react'
 
 const links = {
   platform: [
@@ -22,6 +22,16 @@ export function Footer() {
   const [email, setEmail] = useState('')
   const [msg, setMsg] = useState('')
   const [loading, setLoading] = useState(false)
+  const [settings, setSettings] = useState<any>({})
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(r => r.json())
+      .then(data => {
+        if (!data.error) setSettings(data)
+      })
+      .catch(console.error)
+  }, [])
 
   async function subscribe(e: React.FormEvent) {
     e.preventDefault()
@@ -49,9 +59,9 @@ export function Footer() {
         <div className="footer-grid">
           {/* Brand */}
           <div>
-            <div className="footer-brand-name">Surya CS</div>
+            <div className="footer-brand-name">{settings.siteName || 'Surya CS'}</div>
             <p className="footer-brand-desc">
-              Full-Stack Web Developer & AI Content Creator. Crafting high-performance digital experiences and intelligent web solutions.
+              {settings.siteDescription || 'Full-Stack Web Developer & AI Content Creator. Crafting high-performance digital experiences and intelligent web solutions.'}
             </p>
             <form className="footer-newsletter" onSubmit={subscribe}>
               <input
@@ -90,10 +100,33 @@ export function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Surya CS. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} {settings.siteName || 'Surya CS'}. All rights reserved.</span>
           <div className="flex gap-3">
-            <a href="https://linkedin.com/in/suryacs22" target="_blank" rel="noreferrer" className="footer-link" aria-label="LinkedIn"><MessageCircle size={16} /></a>
-            <a href="https://github.com/Surya200622" target="_blank" rel="noreferrer" className="footer-link" aria-label="GitHub"><Code size={16} /></a>
+            {(settings.linkedinUrl || 'https://linkedin.com/in/suryacs22') && (
+              <a href={settings.linkedinUrl || 'https://linkedin.com/in/suryacs22'} target="_blank" rel="noreferrer" className="footer-link" aria-label="LinkedIn">
+                <Linkedin size={16} />
+              </a>
+            )}
+            {(settings.githubUrl || 'https://github.com/Surya200622') && (
+              <a href={settings.githubUrl || 'https://github.com/Surya200622'} target="_blank" rel="noreferrer" className="footer-link" aria-label="GitHub">
+                <Github size={16} />
+              </a>
+            )}
+            {settings.twitterUrl && (
+              <a href={settings.twitterUrl} target="_blank" rel="noreferrer" className="footer-link" aria-label="Twitter">
+                <Twitter size={16} />
+              </a>
+            )}
+            {settings.facebookUrl && (
+              <a href={settings.facebookUrl} target="_blank" rel="noreferrer" className="footer-link" aria-label="Facebook">
+                <Facebook size={16} />
+              </a>
+            )}
+            {settings.youtubeUrl && (
+              <a href={settings.youtubeUrl} target="_blank" rel="noreferrer" className="footer-link" aria-label="YouTube">
+                <Youtube size={16} />
+              </a>
+            )}
           </div>
         </div>
       </div>
