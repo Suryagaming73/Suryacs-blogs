@@ -38,7 +38,7 @@ export default function AdminUsersPage() {
                   <td>
                     <div className="flex items-center gap-2">
                       {u.avatarUrl ? (
-                        <img src={u.avatarUrl} alt="" width={32} height={32} style={{ borderRadius: '50%', objectFit: 'cover' }} />
+                        <img src={u.avatarUrl} alt="" width={32} height={32} style={{ borderRadius: '50%', objectFit: 'cover' }} referrerPolicy="no-referrer" />
                       ) : (
                         <span className="avatar avatar-sm">{getInitials(u.username)}</span>
                       )}

