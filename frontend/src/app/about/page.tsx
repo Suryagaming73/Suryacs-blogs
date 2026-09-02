@@ -25,7 +25,7 @@ export default function AboutPage() {
             <a href="mailto:cssurya2006@gmail.com" className="badge badge-accent" style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 1rem' }}><Mail size={14} /> cssurya2006@gmail.com</a>
             <span className="badge badge-muted" style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 1rem' }}><MapPin size={14} /> Coimbatore, India</span>
             <a href="https://linkedin.com/in/suryacs22" target="_blank" rel="noreferrer" className="badge badge-accent" style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 1rem' }}><LinkIcon size={14} /> LinkedIn</a>
-            <a href="https://github.com/Surya20062" target="_blank" rel="noreferrer" className="badge badge-muted" style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 1rem' }}><GitBranch size={14} /> GitHub</a>
+            <a href="https://github.com/Surya200622" target="_blank" rel="noreferrer" className="badge badge-muted" style={{ display: 'inline-flex', gap: '0.5rem', alignItems: 'center', padding: '0.5rem 1rem' }}><GitBranch size={14} /> GitHub</a>
           </div>
         </div>
       </section>
