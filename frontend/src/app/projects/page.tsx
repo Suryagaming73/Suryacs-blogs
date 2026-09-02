@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { ExternalLink, Layers, Github } from 'lucide-react'
+import { ExternalLink, Layers } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Projects | Surya CS Portfolio',
