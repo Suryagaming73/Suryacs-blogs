@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Image from 'next/image'
 import { Code, Server, Database, GraduationCap, Briefcase, Award, ExternalLink, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -13,6 +14,9 @@ export default function AboutPage() {
       <section className="section" style={{ background: 'var(--bg-alt)' }}>
         <div className="container-sm" style={{ textAlign: 'center' }}>
           <div className="section-tag"><Code size={12} /> Developer Portfolio</div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
+            <Image src="/portfolio-img-1.png" alt="Surya CS" width={120} height={120} style={{ borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--accent)' }} priority />
+          </div>
           <h1 className="section-title font-heading">Surya CS</h1>
           <p className="section-desc" style={{ fontSize: '1.25rem', color: 'var(--text-muted)' }}>
             Full-Stack Web Developer & AI Content Creator
@@ -28,11 +32,16 @@ export default function AboutPage() {
 
       {/* Summary */}
       <section className="section">
-        <div className="container-sm">
-          <h2 className="section-title font-heading" style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>Professional Summary</h2>
-          <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', lineHeight: 1.8 }}>
-            Result-oriented Full-Stack Developer with a passion for architecting digital solutions that drive business improvement and operational efficiency. Expert in delivering high-impact services including Business Websites, E-commerce stores, Portfolio sites, SaaS Dashboards, CRM & Management Systems, Landing Pages, Booking Websites, and Blogs. Additionally proficient in Google Business Profile optimization, Custom Web Apps, Promo Videos & Graphics, and AI Face Swap solutions. Dedicated to leveraging modern web technologies to solve complex business challenges and enhance user engagement through intuitive, high-availability platforms.
-          </p>
+        <div className="container-sm" style={{ display: 'flex', gap: '3rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 300px' }}>
+            <h2 className="section-title font-heading" style={{ fontSize: '1.75rem', marginBottom: '1.5rem' }}>Professional Summary</h2>
+            <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', lineHeight: 1.8 }}>
+              Result-oriented Full-Stack Developer with a passion for architecting digital solutions that drive business improvement and operational efficiency. Expert in delivering high-impact services including Business Websites, E-commerce stores, Portfolio sites, SaaS Dashboards, CRM & Management Systems, Landing Pages, Booking Websites, and Blogs. Additionally proficient in Google Business Profile optimization, Custom Web Apps, Promo Videos & Graphics, and AI Face Swap solutions. Dedicated to leveraging modern web technologies to solve complex business challenges and enhance user engagement through intuitive, high-availability platforms.
+            </p>
+          </div>
+          <div style={{ flex: '1 1 250px', display: 'flex', justifyContent: 'center' }}>
+            <Image src="/portfolio-img-2.png" alt="Creative AI Content" width={300} height={300} style={{ borderRadius: 'var(--radius-lg)', objectFit: 'cover', maxWidth: '100%', height: 'auto', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} />
+          </div>
         </div>
       </section>
 
