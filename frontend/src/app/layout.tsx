@@ -1,0 +1,54 @@
+import type { Metadata } from 'next'
+import './globals.css'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
+import { Providers } from '@/components/layout/Providers'
+
+export const metadata: Metadata = {
+  title: { default: 'BlogCraft', template: '%s | BlogCraft' },
+  description: 'Premium blog and news platform — stay informed with the latest updates.',
+  keywords: ['blog', 'news', 'articles', 'updates'],
+  authors: [{ name: 'BlogCraft' }],
+  openGraph: {
+    type: 'website',
+    siteName: 'BlogCraft',
+    title: 'BlogCraft',
+    description: 'Premium blog and news platform.',
+  },
+}
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Prevent FOUC: apply theme before React hydrates */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('blogcraft-theme');
+                  if (!theme) {
+                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch(e) {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body>
+        <Providers>
+          <Navbar />
+          <main className="page-wrap">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
+      </body>
+    </html>
+  )
+}

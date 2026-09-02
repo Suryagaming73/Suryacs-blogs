@@ -1,0 +1,180 @@
+import { Metadata } from 'next'
+import Link from 'next/link'
+import { db } from '@/db'
+import { posts, categories, postLikes } from '@/db/schema'
+import { eq, desc, sql, and } from 'drizzle-orm'
+import { PostCard } from '@/components/blog/PostCard'
+import { ArrowRight, Sparkles, TrendingUp, Zap, Mail } from 'lucide-react'
+import { formatNumber } from '@/lib/utils'
+
+export const metadata: Metadata = {
+  title: 'BlogCraft — Latest News & Insights',
+  description: 'Your go-to source for the latest news, insights, and updates. Stay informed with quality content.',
+}
+
+async function getData() {
+  const featured = await db.select({
+    id: posts.id, title: posts.title, slug: posts.slug, excerpt: posts.excerpt,
+    featuredImageUrl: posts.featuredImageUrl, readingTime: posts.readingTime,
+    viewsCount: posts.viewsCount, publishedAt: posts.publishedAt, createdAt: posts.createdAt,
+    isFeatured: posts.isFeatured, externalLink: posts.externalLink,
+    categoryId: posts.categoryId, authorId: posts.authorId,
+    categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
+  })
+  .from(posts)
+  .leftJoin(categories, eq(posts.categoryId, categories.id))
+  .where(and(eq(posts.status, 'published'), eq(posts.isFeatured, true)))
+  .orderBy(desc(posts.publishedAt))
+  .limit(3)
+
+  const latest = await db.select({
+    id: posts.id, title: posts.title, slug: posts.slug, excerpt: posts.excerpt,
+    featuredImageUrl: posts.featuredImageUrl, readingTime: posts.readingTime,
+    viewsCount: posts.viewsCount, publishedAt: posts.publishedAt, createdAt: posts.createdAt,
+    isFeatured: posts.isFeatured, externalLink: posts.externalLink,
+    categoryId: posts.categoryId, authorId: posts.authorId,
+    categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
+  })
+  .from(posts)
+  .leftJoin(categories, eq(posts.categoryId, categories.id))
+  .where(eq(posts.status, 'published'))
+  .orderBy(desc(posts.publishedAt))
+  .limit(6)
+
+  const allCategories = await db.select().from(categories).limit(8)
+
+  const [stats] = await db.select({ total: sql<number>`count(*)` }).from(posts).where(eq(posts.status, 'published'))
+
+  return { featured, latest, categories: allCategories, totalPosts: stats.total }
+}
+
+export default async function HomePage() {
+  const { featured, latest, categories: cats, totalPosts } = await getData()
+
+  return (
+    <>
+      {/* ── Hero ─────────────────────────── */}
+      <section className="hero">
+        <div className="hero-bg" />
+        <div className="container">
+          <div className="hero-content">
+            <div className="hero-eyebrow">
+              <Sparkles size={14} /> Your Daily Dose of Insights
+            </div>
+            <h1 className="hero-title">
+              Stay <span className="gradient-text">Informed</span> &amp; Inspired
+            </h1>
+            <p className="hero-desc">
+              Discover the latest news, deep-dive articles, and curated updates — all in one beautiful place.
+            </p>
+            <div className="hero-actions">
+              <Link href="/blog" className="btn btn-primary btn-lg">
+                <Zap size={18} /> Explore Articles
+              </Link>
+              <Link href="/about" className="btn btn-ghost btn-lg">
+                Learn More <ArrowRight size={16} />
+              </Link>
+            </div>
+
+            {/* Quick stats */}
+            <div className="flex items-center justify-center gap-8 mt-8" style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
+              <div className="flex items-center gap-2">
+                <TrendingUp size={16} style={{ color: 'var(--accent)' }} />
+                <strong style={{ color: 'var(--text)' }}>{formatNumber(totalPosts)}</strong> articles published
+              </div>
+              {cats.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <Sparkles size={16} style={{ color: 'var(--accent)' }} />
+                  <strong style={{ color: 'var(--text)' }}>{cats.length}</strong> categories
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Featured Posts ─────────────────── */}
+      {featured.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <div className="section-header">
+              <div className="section-tag"><Sparkles size={12} /> Featured</div>
+              <h2 className="section-title font-heading">Editor&apos;s Picks</h2>
+              <p className="section-desc">Hand-picked stories we think you&apos;ll love</p>
+            </div>
+            <div className="posts-grid">
+              {featured.map(p => <PostCard key={p.id} post={p} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Latest Posts ────────────────────── */}
+      <section className="section" style={{ background: 'var(--bg-alt)' }}>
+        <div className="container">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+            <div>
+              <div className="section-tag"><TrendingUp size={12} /> Latest</div>
+              <h2 className="section-title font-heading" style={{ textAlign: 'left', margin: '0.5rem 0 0' }}>Recent Articles</h2>
+            </div>
+            <Link href="/blog" className="btn btn-ghost">
+              View All <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="posts-grid">
+            {latest.map(p => <PostCard key={p.id} post={p} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Categories ───────────────────────── */}
+      {cats.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <div className="section-header">
+              <div className="section-tag">Browse</div>
+              <h2 className="section-title font-heading">Explore by Topic</h2>
+            </div>
+            <div className="grid grid-cols-4" style={{ gap: '1rem' }}>
+              {cats.map(cat => (
+                <Link key={cat.id} href={`/blog/category/${cat.slug}`}
+                  className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-sm)', background: `${cat.color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem' }}>
+                    {cat.icon || '📂'}
+                  </div>
+                  <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 700, color: 'var(--text)' }}>{cat.name}</div>
+                  {cat.description && <div className="text-sm text-muted" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{cat.description}</div>}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Newsletter CTA ──────────────────── */}
+      <section style={{ padding: '5rem 0', background: 'var(--bg-alt)' }}>
+        <div className="container-sm" style={{ textAlign: 'center' }}>
+          <div className="card" style={{ padding: '3rem 2rem' }}>
+            <Mail size={48} style={{ margin: '0 auto 1.5rem', color: 'var(--accent)', opacity: 0.8 }} />
+            <h2 className="section-title font-heading">Never Miss a Story</h2>
+            <p className="section-desc" style={{ marginBottom: '2rem' }}>
+              Subscribe to our newsletter and get the best articles delivered straight to your inbox.
+            </p>
+            <NewsletterInline />
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function NewsletterInline() {
+  'use client'
+  // This is a Server Component page, so newsletter form is in Footer already.
+  // We just show a link here.
+  return (
+    <Link href="/contact" className="btn btn-primary btn-lg" style={{ display: 'inline-flex' }}>
+      <Mail size={18} /> Get in Touch
+    </Link>
+  )
+}
