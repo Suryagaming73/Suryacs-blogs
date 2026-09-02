@@ -83,6 +83,9 @@ export function Navbar() {
                     <div className="text-xs text-muted truncate">{user?.email}</div>
                   </div>
                   <div className="dropdown-divider" />
+                  <Link href="/profile" className="dropdown-item" onClick={() => setUserMenuOpen(false)}>
+                    <User size={15} /> Profile Settings
+                  </Link>
                   {user?.role === 'admin' && (
                     <Link href="/dashboard" className="dropdown-item" onClick={() => setUserMenuOpen(false)}>
                       <LayoutDashboard size={15} /> Dashboard
