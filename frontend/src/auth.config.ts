@@ -20,6 +20,13 @@ export const authConfig: NextAuthConfig = {
       }
       return true
     },
+    async session({ session, token }) {
+      if (token) {
+        ;(session.user as any).id = token.id as string
+        ;(session.user as any).role = token.role as string
+      }
+      return session
+    },
   },
   providers: [],
 }
