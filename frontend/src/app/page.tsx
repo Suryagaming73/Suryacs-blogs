@@ -57,24 +57,35 @@ export default async function HomePage() {
       <section className="hero">
         <div className="hero-bg" />
         <div className="container">
-          <div className="hero-content">
+          <div className="hero-content" style={{ maxWidth: 700, margin: '0 auto' }}>
             <div className="hero-eyebrow">
-              <Sparkles size={14} /> Full-Stack Web Developer & AI Content Creator
+              <Sparkles size={14} /> Blog & Insights
             </div>
-            <h1 className="hero-title">
-              Hi, I&apos;m <span className="gradient-text">Surya CS</span>
+            <h1 className="hero-title" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
+              Explore <span className="gradient-text">Articles</span>
             </h1>
-            <p className="hero-desc">
-              I build high-performance web applications, dynamic e-commerce platforms, and intelligent digital solutions to solve complex business challenges.
+            <p className="hero-desc" style={{ marginBottom: '2.5rem' }}>
+              Discover the latest in full-stack web development, dynamic platforms, and intelligent digital solutions.
             </p>
-            <div className="hero-actions">
-              <Link href="/projects" className="btn btn-primary btn-lg">
-                <Zap size={18} /> View My Work
-              </Link>
-              <Link href="/contact" className="btn btn-ghost btn-lg">
-                Hire Me <ArrowRight size={16} />
-              </Link>
-            </div>
+            
+            <form action="/blog" method="GET" style={{ 
+              display: 'flex', gap: '0.5rem', background: 'var(--surface)', padding: '0.5rem', 
+              borderRadius: '999px', border: '1px solid var(--border-strong)', boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+              position: 'relative'
+            }}>
+              <input 
+                type="text" 
+                name="search" 
+                placeholder="Search articles, tutorials, and insights..." 
+                style={{ 
+                  flex: 1, background: 'transparent', border: 'none', padding: '0.5rem 1rem 0.5rem 1.5rem',
+                  color: 'var(--text)', outline: 'none', fontSize: '1rem', width: '100%'
+                }}
+              />
+              <button type="submit" className="btn btn-primary" style={{ borderRadius: '999px', padding: '0 1.5rem' }}>
+                Search
+              </button>
+            </form>
 
             {/* Quick stats */}
             <div className="flex items-center justify-center gap-8 mt-8" style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
@@ -93,7 +104,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Featured Posts ─────────────────── */}
+      {/* ── Featured Posts (Carousel) ─────────────────── */}
       {featured.length > 0 && (
         <section className="section">
           <div className="container">
@@ -102,9 +113,19 @@ export default async function HomePage() {
               <h2 className="section-title font-heading">Editor&apos;s Picks</h2>
               <p className="section-desc">Hand-picked stories we think you&apos;ll love</p>
             </div>
-            <div className="posts-grid">
-              {featured.map(p => <PostCard key={p.id} post={p} />)}
+            <div className="posts-carousel" style={{ 
+              display: 'flex', overflowX: 'auto', gap: '1.5rem', paddingBottom: '1.5rem',
+              scrollSnapType: 'x mandatory', scrollbarWidth: 'none', msOverflowStyle: 'none'
+            }}>
+              {featured.map(p => (
+                <div key={p.id} style={{ scrollSnapAlign: 'start', flex: '0 0 calc(85vw)', maxWidth: '400px', minWidth: '300px' }}>
+                  <PostCard post={p} />
+                </div>
+              ))}
             </div>
+            <style dangerouslySetInnerHTML={{__html: `
+              .posts-carousel::-webkit-scrollbar { display: none; }
+            `}} />
           </div>
         </section>
       )}

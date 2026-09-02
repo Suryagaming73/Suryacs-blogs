@@ -26,6 +26,18 @@ export async function GET(req: NextRequest) {
   else if (status !== 'all') conditions.push(eq(posts.status, status as any))
   if (search) conditions.push(or(like(posts.title, `%${search}%`), like(posts.excerpt, `%${search}%`)))
   if (featured === 'true') conditions.push(eq(posts.isFeatured, true))
+  
+  if (categorySlug) {
+    conditions.push(eq(categories.slug, categorySlug))
+  }
+  
+  if (tagSlug) {
+    const matchingPostIds = db.select({ postId: postTags.postId })
+      .from(postTags)
+      .innerJoin(tags, eq(postTags.tagId, tags.id))
+      .where(eq(tags.slug, tagSlug))
+    conditions.push(sql`${posts.id} IN ${matchingPostIds}`)
+  }
 
   let query = db.select({
     id: posts.id,
