@@ -81,10 +81,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return true
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         token.id = (user as any).id
         token.role = (user as any).role ?? 'viewer'
+        
+        if (account?.provider === 'google' && user.email) {
+          const dbUser = await db
+            .select({ id: users.id, role: users.role })
+            .from(users)
+            .where(eq(users.email, user.email))
+            .get()
+          
+          if (dbUser) {
+            token.id = dbUser.id
+            token.role = dbUser.role
+          }
+        }
       }
       return token
     },
