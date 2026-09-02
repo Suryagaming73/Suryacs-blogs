@@ -73,7 +73,7 @@ export default function ContactPage() {
             {[
               { icon: Mail, title: 'Email', value: 'cssurya2006@gmail.com', color: '#6c5ce7' },
               { icon: Clock, title: 'Response Time', value: 'Within 24–48 hours', color: '#a855f7' },
-              { icon: MapPin, title: 'Based in', value: 'Coimbatore, India 🇮🇳', color: '#10b981' },
+              { icon: MapPin, title: 'Based in', value: '137, Bakthavatchalam Street, Rathinapuri, Coimbatore - 641027', color: '#10b981' },
             ].map(({ icon: Icon, title, value, color }) => (
               <div key={title} className="card" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
                 <div style={{ width: 40, height: 40, borderRadius: 'var(--radius-sm)', background: `${color}18`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
