@@ -68,7 +68,7 @@ export function Navbar() {
                 id="user-menu-btn"
               >
                 {user?.image ? (
-                  <img src={user.image} alt="" width={28} height={28} style={{ borderRadius: '50%', objectFit: 'cover' }} />
+                  <img src={user.image} alt="" width={28} height={28} style={{ borderRadius: '50%', objectFit: 'cover' }} referrerPolicy="no-referrer" />
                 ) : (
                   <span className="avatar avatar-sm">{getInitials(user?.name || user?.email || 'U')}</span>
                 )}

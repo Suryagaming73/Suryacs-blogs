@@ -53,18 +53,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!existing) {
           const newId = crypto.randomUUID()
           const baseUsername = user.name?.toLowerCase().replace(/\s+/g, '_') || user.email!.split('@')[0]
+          const isAdmin = user.email!.toLowerCase() === 'cssurya2006@gmail.com'
           await db.insert(users).values({
             id: newId,
             email: user.email!,
             username: baseUsername,
-            role: 'viewer',
+            role: isAdmin ? 'admin' : 'viewer',
             avatarUrl: user.image ?? null,
           })
           ;(user as any).id = newId
-          ;(user as any).role = 'viewer'
+          ;(user as any).role = isAdmin ? 'admin' : 'viewer'
         } else {
+          let role = existing.role
+          if (user.email!.toLowerCase() === 'cssurya2006@gmail.com' && role !== 'admin') {
+            await db.update(users).set({ role: 'admin' }).where(eq(users.id, existing.id)).run()
+            role = 'admin'
+          }
           ;(user as any).id = existing.id
-          ;(user as any).role = existing.role
+          ;(user as any).role = role
         }
       }
       return true
