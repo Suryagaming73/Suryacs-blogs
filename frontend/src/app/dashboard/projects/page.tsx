@@ -66,7 +66,13 @@ export default function AdminProjectsPage() {
                   <tr key={p.id}>
                     <td>
                       <div className="flex gap-2 items-center">
-                        <span style={{ fontSize: '1.25rem' }}>{p.icon}</span>
+                        <div style={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          {(p.icon?.startsWith('data:image') || p.icon?.startsWith('http')) ? (
+                            <img src={p.icon} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
+                          ) : (
+                            <span style={{ fontSize: '1.25rem' }}>{p.icon}</span>
+                          )}
+                        </div>
                         <div>
                           <div className="font-medium">{p.name}</div>
                           {p.link && <a href={p.link} target="_blank" rel="noreferrer" className="text-xs text-accent flex items-center gap-1">Link <ExternalLink size={10} /></a>}
@@ -112,8 +118,24 @@ export default function AdminProjectsPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
               <div className="input-wrap">
-                <label className="input-label">Icon (emoji)</label>
-                <input className="input" placeholder="📁" value={form.icon} onChange={e => set('icon', e.target.value)} style={{ fontSize: '1.25rem' }} />
+                <label className="input-label">Thumbnail Image</label>
+                {(form.icon?.startsWith('data:image') || form.icon?.startsWith('http')) ? (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <img src={form.icon} alt="thumbnail" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 'var(--radius-sm)' }} />
+                    <button type="button" className="btn btn-ghost btn-sm" onClick={() => set('icon', '')}>Remove</button>
+                  </div>
+                ) : (
+                  <input type="file" className="input" accept="image/*" onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      const reader = new FileReader()
+                      reader.onload = (ev) => {
+                        set('icon', ev.target?.result as string)
+                      }
+                      reader.readAsDataURL(file)
+                    }
+                  }} />
+                )}
               </div>
               <div className="input-wrap">
                 <label className="input-label">Display Order</label>

@@ -4,6 +4,7 @@ import { db } from '@/db'
 import { posts, comments, postLikes, users, subscribers, contactMessages } from '@/db/schema'
 import { eq, sql, desc } from 'drizzle-orm'
 import { StatsCard } from '@/components/dashboard/StatsCard'
+import { ViewsChart } from '@/components/dashboard/ViewsChart'
 import { FileText, Eye, Heart, MessageSquare, Users, Mail, Inbox, Edit } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
 
@@ -116,26 +117,7 @@ export default async function DashboardPage() {
           <div className="flex items-center justify-between mb-4">
             <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '1.1rem', fontWeight: 700 }}>Top Posts by Views</h2>
           </div>
-          <div className="data-table-wrap">
-            <table className="data-table">
-              <thead><tr><th>Title</th><th>Views</th></tr></thead>
-              <tbody>
-                {stats.topPosts.map((p, i) => (
-                  <tr key={p.id}>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span style={{ width: 22, height: 22, borderRadius: '50%', background: 'var(--accent-soft)', color: 'var(--accent)', fontSize: '0.7rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                          {i + 1}
-                        </span>
-                        <Link href={`/blog/${p.slug}`} className="truncate" style={{ maxWidth: 200, color: 'var(--text)', fontSize: '0.875rem' }}>{p.title}</Link>
-                      </div>
-                    </td>
-                    <td><Eye size={13} style={{ display: 'inline', marginRight: 4, color: 'var(--text-faint)' }} />{p.viewsCount || 0}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <ViewsChart data={stats.topPosts.map(p => ({ title: p.title, views: p.viewsCount || 0 }))} />
         </div>
       </div>
     </div>

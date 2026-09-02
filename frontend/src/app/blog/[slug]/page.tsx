@@ -9,6 +9,7 @@ import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { LikeButton } from '@/components/blog/LikeButton'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { CommentSection } from '@/components/blog/CommentSection'
+import { TableOfContents } from '@/components/blog/TableOfContents'
 import { Clock, Eye, Calendar, User, ExternalLink, ArrowLeft, Tag } from 'lucide-react'
 import Link from 'next/link'
 import { formatNumber } from '@/lib/utils'
@@ -80,8 +81,8 @@ export default async function PostDetailPage({ params }: Props) {
   return (
     <>
       <ReadingProgress />
-      <div className="container">
-        <article className="post-detail">
+      <div className="container" style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
+        <article className="post-detail" style={{ flex: 1, minWidth: 0 }}>
           {/* Back */}
           <Link href="/blog" className="btn btn-ghost btn-sm mb-6" style={{ display: 'inline-flex', marginTop: '1.5rem' }}>
             <ArrowLeft size={15} /> Back to Blog
@@ -171,6 +172,11 @@ export default async function PostDetailPage({ params }: Props) {
           {/* Comments */}
           <CommentSection slug={slug} />
         </article>
+
+        {/* Sidebar for TOC */}
+        <aside style={{ width: 280, flexShrink: 0, marginTop: '2rem' }} className="toc-sidebar">
+          <TableOfContents />
+        </aside>
       </div>
     </>
   )

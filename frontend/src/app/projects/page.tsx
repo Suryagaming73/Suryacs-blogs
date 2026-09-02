@@ -31,8 +31,12 @@ export default async function ProjectsPage() {
             {dbProjects.map(project => (
               <div key={project.name} className="card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-                  <div style={{ width: 48, height: 48, borderRadius: 'var(--radius-sm)', background: 'var(--bg-alt)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>
-                    {project.icon}
+                  <div style={{ width: 48, height: 48, borderRadius: 'var(--radius-sm)', background: 'var(--bg-alt)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', overflow: 'hidden', flexShrink: 0 }}>
+                    {(project.icon?.startsWith('data:image') || project.icon?.startsWith('http')) ? (
+                      <img src={project.icon} alt={project.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      project.icon
+                    )}
                   </div>
                   <div>
                     <h3 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>{project.name}</h3>

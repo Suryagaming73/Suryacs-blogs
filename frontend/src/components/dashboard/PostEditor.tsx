@@ -52,6 +52,45 @@ export function PostEditor({ value, onChange, placeholder = 'Start writing your 
       CodeBlockLowlight.configure({ lowlight }),
       Placeholder.configure({ placeholder }),
     ],
+    editorProps: {
+      handleDrop: function(view, event, slice, moved) {
+        if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
+          let file = event.dataTransfer.files[0]
+          if (file.type.startsWith('image/')) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+              const src = e.target?.result as string
+              const { schema } = view.state
+              const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY })
+              const node = schema.nodes.image.create({ src })
+              const transaction = view.state.tr.insert(coordinates?.pos || 0, node)
+              view.dispatch(transaction)
+            }
+            reader.readAsDataURL(file)
+            return true // handled
+          }
+        }
+        return false
+      },
+      handlePaste: function(view, event, slice) {
+        if (event.clipboardData && event.clipboardData.files && event.clipboardData.files[0]) {
+          let file = event.clipboardData.files[0]
+          if (file.type.startsWith('image/')) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+              const src = e.target?.result as string
+              const { schema } = view.state
+              const node = schema.nodes.image.create({ src })
+              const transaction = view.state.tr.replaceSelectionWith(node)
+              view.dispatch(transaction)
+            }
+            reader.readAsDataURL(file)
+            return true // handled
+          }
+        }
+        return false
+      }
+    },
     content: value,
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
   })
