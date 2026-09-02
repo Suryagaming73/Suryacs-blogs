@@ -138,9 +138,24 @@ export function PostEditor({ value, onChange, placeholder = 'Start writing your 
         <div style={{ position: 'relative' }}>
           <ToolbarBtn onClick={() => { setShowImageInput(v => !v); setShowLinkInput(false); setShowYtInput(false) }} title="Insert Image"><ImageIcon size={14} /></ToolbarBtn>
           {showImageInput && (
-            <div style={{ position: 'absolute', top: '110%', left: 0, zIndex: 100, background: 'var(--surface)', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-sm)', padding: '0.5rem', display: 'flex', gap: '0.375rem', minWidth: 260 }}>
-              <input className="input" style={{ padding: '0.35rem 0.625rem', fontSize: '0.8rem' }} placeholder="Image URL..." value={imageUrl} onChange={e => setImageUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && addImage()} autoFocus />
-              <button type="button" className="btn btn-primary btn-sm" onClick={addImage}>Add</button>
+            <div style={{ position: 'absolute', top: '110%', left: 0, zIndex: 100, background: 'var(--surface)', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-sm)', padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', minWidth: 260 }}>
+              <input type="file" className="input" accept="image/*" style={{ padding: '0.35rem', fontSize: '0.8rem' }} onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) {
+                  const reader = new FileReader()
+                  reader.onload = (ev) => {
+                    const src = ev.target?.result as string
+                    editor?.chain().focus().setImage({ src }).run()
+                    setShowImageInput(false)
+                  }
+                  reader.readAsDataURL(file)
+                }
+              }} />
+              <div className="text-xs text-center text-muted">OR PASTE URL</div>
+              <div style={{ display: 'flex', gap: '0.375rem' }}>
+                <input className="input" style={{ padding: '0.35rem 0.625rem', fontSize: '0.8rem', flex: 1 }} placeholder="Image URL..." value={imageUrl} onChange={e => setImageUrl(e.target.value)} onKeyDown={e => e.key === 'Enter' && addImage()} autoFocus />
+                <button type="button" className="btn btn-primary btn-sm" onClick={addImage}>Add</button>
+              </div>
             </div>
           )}
         </div>

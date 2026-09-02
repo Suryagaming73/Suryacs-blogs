@@ -72,7 +72,7 @@ export function Navbar() {
                 ) : (
                   <span className="avatar avatar-sm">{getInitials(user?.name || user?.email || 'U')}</span>
                 )}
-                <span className="text-sm font-medium" style={{ maxWidth: 100, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <span className="text-sm font-medium hidden-mobile" style={{ maxWidth: 100, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {user?.name || user?.email}
                 </span>
               </button>

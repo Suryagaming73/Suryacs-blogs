@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { signOut } from 'next-auth/react'
@@ -61,44 +62,71 @@ interface SidebarProps {
 export function Sidebar({ unreadMessages = 0 }: SidebarProps) {
   const pathname = usePathname()
 
+  const [isOpen, setIsOpen] = useState(false)
+
   function isActive(href: string) {
     if (href === '/dashboard') return pathname === '/dashboard'
     return pathname.startsWith(href)
   }
 
+  // Close sidebar on route change on mobile
+  useEffect(() => {
+    setIsOpen(false)
+  }, [pathname])
+
   return (
-    <aside className="sidebar">
-      <div className="sidebar-logo">BlogCraft</div>
-
-      {sections.map(section => (
-        <div key={section.title} className="sidebar-section">
-          <div className="sidebar-section-title">{section.title}</div>
-          {section.items.map(item => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`sidebar-item ${isActive(item.href) ? 'active' : ''}`}
-            >
-              <item.icon size={16} />
-              {item.label}
-              {item.label === 'Messages' && unreadMessages > 0 && (
-                <span className="sidebar-badge">{unreadMessages}</span>
-              )}
-            </Link>
-          ))}
-        </div>
-      ))}
-
-      <div style={{ marginTop: 'auto', padding: '0 0.75rem 1rem' }}>
-        <button
-          className="sidebar-item"
-          style={{ width: '100%', color: 'var(--danger)' }}
-          onClick={() => signOut({ callbackUrl: '/' })}
-          id="sidebar-signout-btn"
-        >
-          <LogOut size={16} /> Sign Out
+    <>
+      {/* Mobile Header Toggle */}
+      <div className="mobile-sidebar-header" style={{ alignItems: 'center', padding: '1rem', borderBottom: '1px solid var(--border)', background: 'var(--surface)', position: 'sticky', top: 0, zIndex: 900 }}>
+        <button className="btn btn-ghost" onClick={() => setIsOpen(true)} style={{ padding: '0.5rem' }}>
+          <LayoutDashboard size={20} />
         </button>
+        <span style={{ fontWeight: 600, marginLeft: '0.5rem' }}>Dashboard</span>
       </div>
-    </aside>
+
+      {isOpen && (
+        <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />
+      )}
+
+      <aside className={`sidebar ${isOpen ? 'mobile-open' : ''}`}>
+        <div className="sidebar-logo flex items-center justify-between">
+          BlogCraft
+          <button className="hidden-desktop" onClick={() => setIsOpen(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
+            <span style={{ fontSize: '1.25rem' }}>&times;</span>
+          </button>
+        </div>
+
+        {sections.map(section => (
+          <div key={section.title} className="sidebar-section">
+            <div className="sidebar-section-title">{section.title}</div>
+            {section.items.map(item => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`sidebar-item ${isActive(item.href) ? 'active' : ''}`}
+                onClick={() => setIsOpen(false)}
+              >
+                <item.icon size={16} />
+                {item.label}
+                {item.label === 'Messages' && unreadMessages > 0 && (
+                  <span className="sidebar-badge">{unreadMessages}</span>
+                )}
+              </Link>
+            ))}
+          </div>
+        ))}
+
+        <div style={{ marginTop: 'auto', padding: '0 0.75rem 1rem' }}>
+          <button
+            className="sidebar-item"
+            style={{ width: '100%', color: 'var(--danger)' }}
+            onClick={() => signOut({ callbackUrl: '/' })}
+            id="sidebar-signout-btn"
+          >
+            <LogOut size={16} /> Sign Out
+          </button>
+        </div>
+      </aside>
+    </>
   )
 }

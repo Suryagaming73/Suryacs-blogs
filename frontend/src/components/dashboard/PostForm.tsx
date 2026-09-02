@@ -180,7 +180,18 @@ export function PostForm({ initialData, mode, slug }: PostFormProps) {
                 </button>
               </div>
             )}
-            <input id="post-image-url" className="input" placeholder="Image URL..." value={form.featuredImageUrl} onChange={e => set('featuredImageUrl', e.target.value)} />
+            <div className="flex flex-col gap-2">
+              <input type="file" className="input" accept="image/*" onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) {
+                  const reader = new FileReader()
+                  reader.onload = (ev) => set('featuredImageUrl', ev.target?.result as string)
+                  reader.readAsDataURL(file)
+                }
+              }} />
+              <div className="text-sm text-center text-muted">OR</div>
+              <input id="post-image-url" className="input" placeholder="Paste Image URL..." value={form.featuredImageUrl} onChange={e => set('featuredImageUrl', e.target.value)} />
+            </div>
           </div>
 
           {/* Category */}
