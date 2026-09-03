@@ -56,7 +56,7 @@ export function PostCard({ post, variant = 'default' }: PostCardProps) {
         {/* Image */}
         <div className="post-card-image">
           {post.featuredImageUrl ? (
-            <img src={post.featuredImageUrl} alt={post.title} loading="lazy" />
+            <img src={post.featuredImageUrl} alt={post.title} />
           ) : (
             <div style={{ width: '100%', height: '100%', background: 'var(--accent-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontSize: '2.5rem', opacity: 0.25 }}>📰</span>

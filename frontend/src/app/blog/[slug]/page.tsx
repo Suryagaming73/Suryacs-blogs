@@ -57,23 +57,22 @@ export default async function PostDetailPage({ params }: Props) {
   if (!post) notFound()
   if (post.status !== 'published' && currentUser?.role !== 'admin') notFound()
 
-  // Get tags
-  const postTagRows = await db.select({ name: tags.name, slug: tags.slug })
-    .from(postTags).leftJoin(tags, eq(postTags.tagId, tags.id))
-    .where(eq(postTags.postId, post.id))
+  // Get tags and likes in parallel
+  const [postTagRows, [{ likeCount }], likedRow] = await Promise.all([
+    db.select({ name: tags.name, slug: tags.slug })
+      .from(postTags).leftJoin(tags, eq(postTags.tagId, tags.id))
+      .where(eq(postTags.postId, post.id)),
+      
+    db.select({ likeCount: sql<number>`count(*)` })
+      .from(postLikes).where(eq(postLikes.postId, post.id)),
 
-  // Like info
-  const [{ likeCount }] = await db.select({ likeCount: sql<number>`count(*)` })
-    .from(postLikes).where(eq(postLikes.postId, post.id))
-
-  let userLiked = false
-  if (currentUser?.id) {
-    const liked = await db.select({ id: postLikes.id })
+    currentUser?.id ? db.select({ id: postLikes.id })
       .from(postLikes)
       .where(and(eq(postLikes.postId, post.id), eq(postLikes.userId, currentUser.id)))
-      .get()
-    userLiked = !!liked
-  }
+      .get() : Promise.resolve(null)
+  ])
+
+  let userLiked = !!likedRow
 
   // Increment views (fire-and-forget)
   db.update(posts).set({ viewsCount: (post.viewsCount || 0) + 1 }).where(eq(posts.id, post.id)).run().catch(() => {})

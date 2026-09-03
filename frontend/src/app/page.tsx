@@ -14,39 +14,41 @@ export const metadata: Metadata = {
 }
 
 async function getData() {
-  const featured = await db.select({
-    id: posts.id, title: posts.title, slug: posts.slug, excerpt: posts.excerpt,
-    featuredImageUrl: posts.featuredImageUrl, readingTime: posts.readingTime,
-    viewsCount: posts.viewsCount, publishedAt: posts.publishedAt, createdAt: posts.createdAt,
-    isFeatured: posts.isFeatured, externalLink: posts.externalLink,
-    categoryId: posts.categoryId, authorId: posts.authorId,
-    categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
-  })
-  .from(posts)
-  .leftJoin(categories, eq(posts.categoryId, categories.id))
-  .where(and(eq(posts.status, 'published'), eq(posts.isFeatured, true)))
-  .orderBy(desc(posts.publishedAt))
-  .limit(3)
+  const [featured, latest, allCategories, statsResult] = await Promise.all([
+    db.select({
+      id: posts.id, title: posts.title, slug: posts.slug, excerpt: posts.excerpt,
+      featuredImageUrl: posts.featuredImageUrl, readingTime: posts.readingTime,
+      viewsCount: posts.viewsCount, publishedAt: posts.publishedAt, createdAt: posts.createdAt,
+      isFeatured: posts.isFeatured, externalLink: posts.externalLink,
+      categoryId: posts.categoryId, authorId: posts.authorId,
+      categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
+    })
+    .from(posts)
+    .leftJoin(categories, eq(posts.categoryId, categories.id))
+    .where(and(eq(posts.status, 'published'), eq(posts.isFeatured, true)))
+    .orderBy(desc(posts.publishedAt))
+    .limit(3),
+    
+    db.select({
+      id: posts.id, title: posts.title, slug: posts.slug, excerpt: posts.excerpt,
+      featuredImageUrl: posts.featuredImageUrl, readingTime: posts.readingTime,
+      viewsCount: posts.viewsCount, publishedAt: posts.publishedAt, createdAt: posts.createdAt,
+      isFeatured: posts.isFeatured, externalLink: posts.externalLink,
+      categoryId: posts.categoryId, authorId: posts.authorId,
+      categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
+    })
+    .from(posts)
+    .leftJoin(categories, eq(posts.categoryId, categories.id))
+    .where(eq(posts.status, 'published'))
+    .orderBy(desc(posts.publishedAt))
+    .limit(6),
 
-  const latest = await db.select({
-    id: posts.id, title: posts.title, slug: posts.slug, excerpt: posts.excerpt,
-    featuredImageUrl: posts.featuredImageUrl, readingTime: posts.readingTime,
-    viewsCount: posts.viewsCount, publishedAt: posts.publishedAt, createdAt: posts.createdAt,
-    isFeatured: posts.isFeatured, externalLink: posts.externalLink,
-    categoryId: posts.categoryId, authorId: posts.authorId,
-    categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
-  })
-  .from(posts)
-  .leftJoin(categories, eq(posts.categoryId, categories.id))
-  .where(eq(posts.status, 'published'))
-  .orderBy(desc(posts.publishedAt))
-  .limit(6)
+    db.select().from(categories).limit(8),
 
-  const allCategories = await db.select().from(categories).limit(8)
+    db.select({ total: sql<number>`count(*)` }).from(posts).where(eq(posts.status, 'published'))
+  ])
 
-  const [stats] = await db.select({ total: sql<number>`count(*)` }).from(posts).where(eq(posts.status, 'published'))
-
-  return { featured, latest, categories: allCategories, totalPosts: stats.total }
+  return { featured, latest, categories: allCategories, totalPosts: statsResult[0]?.total || 0 }
 }
 
 export default async function HomePage() {
