@@ -30,7 +30,9 @@ export function stripHtml(html: string, maxLength = 200): string {
 
 /** Format a date string for display */
 export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOptions): string {
+  if (!date) return ''
   const d = typeof date === 'string' ? new Date(date) : date
+  if (isNaN(d.getTime())) return ''
   return d.toLocaleDateString('en-IN', {
     year: 'numeric',
     month: 'long',

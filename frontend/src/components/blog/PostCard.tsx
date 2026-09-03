@@ -93,10 +93,10 @@ export function PostCard({ post, variant = 'default' }: PostCardProps) {
           </div>
 
           {/* Title */}
-          <h3 className="post-card-title">{post.title}</h3>
+          <h3 className="post-card-title" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.title}</h3>
 
           {/* Excerpt */}
-          {post.excerpt && <p className="post-card-excerpt">{post.excerpt}</p>}
+          {post.excerpt && <p className="post-card-excerpt" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.excerpt}</p>}
 
           {/* Footer */}
           <div className="post-card-footer">
