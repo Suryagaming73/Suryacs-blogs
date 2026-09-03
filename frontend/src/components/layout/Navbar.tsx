@@ -27,7 +27,7 @@ export function Navbar() {
       <div className="navbar-inner">
         {/* Logo */}
         <Link href="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
-          Surya CS
+          Suryacs-Blogs
         </Link>
 
         {/* Desktop Links */}

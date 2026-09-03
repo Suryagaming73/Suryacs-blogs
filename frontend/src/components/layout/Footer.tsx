@@ -92,7 +92,7 @@ export function Footer() {
         <div className="footer-grid">
           {/* Brand */}
           <div>
-            <div className="footer-brand-name">{settings.siteName || 'Surya CS'}</div>
+            <div className="footer-brand-name">{settings.siteName || 'Suryacs-Blogs'}</div>
             <p className="footer-brand-desc">
               {settings.siteDescription || 'Full-Stack Web Developer & AI Content Creator. Crafting high-performance digital experiences and intelligent web solutions.'}
             </p>
@@ -133,7 +133,7 @@ export function Footer() {
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} {settings.siteName || 'Surya CS'}. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} {settings.siteName || 'Suryacs-Blogs'}. All rights reserved.</span>
           <div className="flex gap-3">
             {(settings.linkedinUrl || 'https://linkedin.com/in/suryacs22') && (
               <a href={settings.linkedinUrl || 'https://linkedin.com/in/suryacs22'} target="_blank" rel="noreferrer" className="footer-link" aria-label="LinkedIn">

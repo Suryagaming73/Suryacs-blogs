@@ -5,14 +5,14 @@ import { Footer } from '@/components/layout/Footer'
 import { Providers } from '@/components/layout/Providers'
 
 export const metadata: Metadata = {
-  title: { default: 'BlogCraft', template: '%s | BlogCraft' },
+  title: { default: 'Suryacs-Blogs', template: '%s | Suryacs-Blogs' },
   description: 'Premium blog and news platform — stay informed with the latest updates.',
   keywords: ['blog', 'news', 'articles', 'updates'],
-  authors: [{ name: 'BlogCraft' }],
+  authors: [{ name: 'Suryacs-Blogs' }],
   openGraph: {
     type: 'website',
-    siteName: 'BlogCraft',
-    title: 'BlogCraft',
+    siteName: 'Suryacs-Blogs',
+    title: 'Suryacs-Blogs',
     description: 'Premium blog and news platform.',
   },
 }

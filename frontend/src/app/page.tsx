@@ -8,8 +8,8 @@ import { ArrowRight, Sparkles, TrendingUp, Zap, Mail, Clock, Search } from 'luci
 import { formatNumber } from '@/lib/utils'
 
 export const metadata: Metadata = {
-  title: 'Surya CS | Full-Stack Web Developer & AI Content Creator',
-  description: 'Portfolio and blog of Surya CS. Discover projects, services, and the latest insights in web development and AI.',
+  title: 'Suryacs-Blogs | Full-Stack Web Developer & AI Content Creator',
+  description: 'Portfolio and blog of Suryacs-Blogs. Discover projects, services, and the latest insights in web development and AI.',
 }
 
 async function getData() {
