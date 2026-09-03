@@ -81,8 +81,8 @@ export default async function PostDetailPage({ params }: Props) {
   return (
     <>
       <ReadingProgress />
-      <div className="container" style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start' }}>
-        <article className="post-detail" style={{ flex: 1, minWidth: 0 }}>
+      <div className="container" style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start', justifyContent: 'center' }}>
+        <article className="post-detail" style={{ flex: 1, minWidth: 0, width: '100%' }}>
           {/* Back */}
           <Link href="/blog" className="btn btn-ghost btn-sm mb-6" style={{ display: 'inline-flex', marginTop: '1.5rem' }}>
             <ArrowLeft size={15} /> Back to Blog
@@ -174,9 +174,7 @@ export default async function PostDetailPage({ params }: Props) {
         </article>
 
         {/* Sidebar for TOC */}
-        <aside style={{ width: 280, flexShrink: 0, marginTop: '2rem' }} className="toc-sidebar">
-          <TableOfContents />
-        </aside>
+        <TableOfContents />
       </div>
     </>
   )

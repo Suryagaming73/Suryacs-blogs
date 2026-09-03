@@ -47,29 +47,31 @@ export function TableOfContents() {
   if (headings.length === 0) return null
 
   return (
-    <div className="toc-wrapper">
-      <h4 className="toc-title">Table of Contents</h4>
-      <nav className="toc-nav">
-        <ul>
-          {headings.map((heading, idx) => (
-            <li 
-              key={idx} 
-              style={{ paddingLeft: heading.level === 3 ? '1rem' : '0' }}
-              className={activeId === heading.id ? 'active' : ''}
-            >
-              <a 
-                href={`#${heading.id}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' })
-                }}
+    <aside style={{ width: 280, flexShrink: 0, marginTop: '2rem' }} className="toc-sidebar hidden-mobile">
+      <div className="toc-wrapper">
+        <h4 className="toc-title">Table of Contents</h4>
+        <nav className="toc-nav">
+          <ul>
+            {headings.map((heading, idx) => (
+              <li 
+                key={idx} 
+                style={{ paddingLeft: heading.level === 3 ? '1rem' : '0' }}
+                className={activeId === heading.id ? 'active' : ''}
               >
-                {heading.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+                <a 
+                  href={`#${heading.id}`}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </aside>
   )
 }
