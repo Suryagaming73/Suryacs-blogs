@@ -43,7 +43,7 @@ export function Navbar() {
       <div className="navbar-inner">
         {/* Logo */}
         <Link href="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
-          Suryacs-Blogs
+          <img src="/logo.svg" alt="Suryacs-Blogs" style={{ height: '36px', width: 'auto' }} />
         </Link>
 
         {/* Desktop Links */}

@@ -95,7 +95,7 @@ export function Sidebar({ unreadMessages = 0 }: SidebarProps) {
 
       <aside className={`sidebar ${isOpen ? 'mobile-open' : ''}`}>
         <div className="sidebar-logo flex items-center justify-between">
-          BlogCraft
+          <img src="/logo.svg" alt="Suryacs-Blogs" style={{ height: '32px', width: 'auto' }} />
           <button className="hidden-desktop" onClick={() => setIsOpen(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
             <span style={{ fontSize: '1.25rem' }}>&times;</span>
           </button>
