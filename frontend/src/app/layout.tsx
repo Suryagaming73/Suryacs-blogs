@@ -3,6 +3,7 @@ import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Providers } from '@/components/layout/Providers'
+import NextTopLoader from 'nextjs-toploader'
 
 export const metadata: Metadata = {
   title: { default: 'Suryacs-Blogs', template: '%s | Suryacs-Blogs' },
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
+          <NextTopLoader color="var(--accent)" showSpinner={false} />
           <Navbar />
           <main className="page-wrap">
             {children}
