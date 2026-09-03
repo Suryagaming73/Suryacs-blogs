@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ArrowRight, Clock, Search, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface Post {
