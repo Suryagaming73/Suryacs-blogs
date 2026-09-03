@@ -17,7 +17,7 @@ interface PostFormProps {
   initialData?: {
     title?: string; content?: string; excerpt?: string;
     featuredImageUrl?: string | null; categoryId?: string | null;
-    status?: string; isFeatured?: boolean; externalLink?: string | null;
+    status?: string; isFeatured?: boolean; externalLink?: string | null; externalLinkText?: string | null;
     metaTitle?: string; metaDescription?: string;
     tagIds?: string[]; slug?: string;
   }
@@ -36,6 +36,7 @@ export function PostForm({ initialData, mode, slug }: PostFormProps) {
     featuredImageUrl: initialData?.featuredImageUrl || '',
     categoryId: initialData?.categoryId || '',
     externalLink: initialData?.externalLink || '',
+    externalLinkText: initialData?.externalLinkText || '',
     status: initialData?.status || 'draft',
     isFeatured: initialData?.isFeatured || false,
     metaTitle: initialData?.metaTitle || '',
@@ -226,9 +227,13 @@ export function PostForm({ initialData, mode, slug }: PostFormProps) {
               <input type="checkbox" checked={form.isFeatured} onChange={e => set('isFeatured', e.target.checked)} id="post-featured" />
               <span className="text-sm font-medium">Mark as Featured</span>
             </label>
-            <div className="input-wrap">
-              <label className="input-label" htmlFor="post-external-link">External Link (Read More)</label>
+            <div className="input-wrap mb-2">
+              <label className="input-label" htmlFor="post-external-link">External Link URL</label>
               <input id="post-external-link" className="input" placeholder="https://..." value={form.externalLink} onChange={e => set('externalLink', e.target.value)} />
+            </div>
+            <div className="input-wrap">
+              <label className="input-label" htmlFor="post-external-link-text">External Link Button Text</label>
+              <input id="post-external-link-text" className="input" placeholder="e.g. Read Full Article" value={form.externalLinkText} onChange={e => set('externalLinkText', e.target.value)} />
             </div>
           </div>
         </div>

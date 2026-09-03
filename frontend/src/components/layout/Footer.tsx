@@ -39,8 +39,6 @@ const Youtube = ({ size = 16 }) => (
 const links = {
   platform: [
     { href: '/', label: 'Home' },
-    { href: '/projects', label: 'Projects' },
-    { href: '/services', label: 'Services' },
     { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
@@ -94,7 +92,7 @@ export function Footer() {
           <div>
             <div className="footer-brand-name">{settings.siteName || 'Suryacs-Blogs'}</div>
             <p className="footer-brand-desc">
-              {settings.siteDescription || 'Full-Stack Web Developer & AI Content Creator. Crafting high-performance digital experiences and intelligent web solutions.'}
+              {settings.siteDescription || 'Your source for the latest in technology, custom software, and digital innovation.'}
             </p>
             <form className="footer-newsletter" onSubmit={subscribe}>
               <input

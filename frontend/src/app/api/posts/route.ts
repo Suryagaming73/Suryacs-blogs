@@ -50,6 +50,7 @@ export async function GET(req: NextRequest) {
     viewsCount: posts.viewsCount,
     readingTime: posts.readingTime,
     externalLink: posts.externalLink,
+    externalLinkText: posts.externalLinkText,
     publishedAt: posts.publishedAt,
     createdAt: posts.createdAt,
     categoryId: posts.categoryId,
@@ -89,7 +90,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const { title, content, excerpt, featuredImageUrl, categoryId, tagIds, seriesId, seriesOrder,
-      status, isFeatured, metaTitle, metaDescription, externalLink } = body
+      status, isFeatured, metaTitle, metaDescription, externalLink, externalLinkText } = body
 
     if (!title) return NextResponse.json({ error: 'Title is required' }, { status: 400 })
 
@@ -115,6 +116,7 @@ export async function POST(req: NextRequest) {
       metaTitle: metaTitle || '',
       metaDescription: metaDescription || '',
       externalLink: externalLink || null,
+      externalLinkText: externalLinkText || null,
       publishedAt,
     }).returning()
 

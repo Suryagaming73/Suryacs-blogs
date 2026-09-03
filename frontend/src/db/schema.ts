@@ -61,6 +61,7 @@ export const posts = sqliteTable('posts', {
   metaTitle: text('meta_title').default(''),
   metaDescription: text('meta_description').default(''),
   externalLink: text('external_link'),
+  externalLinkText: text('external_link_text'),
   publishedAt: text('published_at'),
   createdAt: text('created_at').$defaultFn(() => new Date().toISOString()),
   updatedAt: text('updated_at').$defaultFn(() => new Date().toISOString()),

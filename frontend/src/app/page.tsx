@@ -133,7 +133,7 @@ export default async function HomePage() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
             <div>
               <div className="section-tag"><TrendingUp size={12} /> Latest</div>
-              <h2 className="section-title font-heading" style={{ textAlign: 'left', margin: '0.5rem 0 0' }}>Recent Articles</h2>
+              <h2 className="section-title font-heading" style={{ textAlign: 'left', margin: '0.5rem 0 0' }}>Latest News & Articles</h2>
             </div>
             <Link href="/blog" className="btn btn-ghost">
               View All <ArrowRight size={16} />
@@ -169,18 +169,19 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ── CTA ──────────────────── */}
+      {/* ── Newsletter CTA ──────────────────── */}
       <section style={{ padding: '5rem 0', background: 'var(--bg-alt)' }}>
         <div className="container-sm" style={{ textAlign: 'center' }}>
           <div className="card" style={{ padding: '3rem 2rem' }}>
-            <Zap size={48} style={{ margin: '0 auto 1.5rem', color: 'var(--accent)', opacity: 0.8 }} />
-            <h2 className="section-title font-heading">Let&apos;s Work Together</h2>
+            <Mail size={48} style={{ margin: '0 auto 1.5rem', color: 'var(--accent)', opacity: 0.8 }} />
+            <h2 className="section-title font-heading">Subscribe to Our Newsletter</h2>
             <p className="section-desc" style={{ marginBottom: '2rem' }}>
-              Have a project in mind or need a reliable full-stack developer? Feel free to reach out. I&apos;m currently open to new opportunities!
+              Get the latest articles, tutorials, and tech news delivered straight to your inbox. No spam, just high-quality content.
             </p>
-            <Link href="/contact" className="btn btn-primary btn-lg" style={{ display: 'inline-flex' }}>
-              <Mail size={18} /> Get in Touch
-            </Link>
+            <form action="/api/newsletter" method="POST" style={{ display: 'flex', gap: '0.5rem', maxWidth: '400px', margin: '0 auto' }}>
+              <input type="email" name="email" placeholder="Enter your email address" required style={{ flex: 1, padding: '0.75rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: 'var(--bg)' }} />
+              <button type="submit" className="btn btn-primary">Subscribe</button>
+            </form>
           </div>
         </div>
       </section>

@@ -6,14 +6,14 @@ import { Providers } from '@/components/layout/Providers'
 
 export const metadata: Metadata = {
   title: { default: 'Suryacs-Blogs', template: '%s | Suryacs-Blogs' },
-  description: 'Premium blog and news platform — stay informed with the latest updates.',
-  keywords: ['blog', 'news', 'articles', 'updates'],
+  description: 'A premium tech and news publication delivering insights on software, technology, and industry trends.',
+  keywords: ['blog', 'news', 'articles', 'updates', 'technology', 'software'],
   authors: [{ name: 'Suryacs-Blogs' }],
   openGraph: {
     type: 'website',
     siteName: 'Suryacs-Blogs',
     title: 'Suryacs-Blogs',
-    description: 'Premium blog and news platform.',
+    description: 'A premium tech and news publication delivering insights on software, technology, and industry trends.',
   },
 }
 

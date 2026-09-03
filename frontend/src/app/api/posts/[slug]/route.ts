@@ -17,7 +17,7 @@ export async function GET(req: NextRequest, { params }: Params) {
     featuredImageUrl: posts.featuredImageUrl, status: posts.status,
     isFeatured: posts.isFeatured, viewsCount: posts.viewsCount,
     readingTime: posts.readingTime, metaTitle: posts.metaTitle,
-    metaDescription: posts.metaDescription, externalLink: posts.externalLink,
+    metaDescription: posts.metaDescription, externalLink: posts.externalLink, externalLinkText: posts.externalLinkText,
     publishedAt: posts.publishedAt, createdAt: posts.createdAt, updatedAt: posts.updatedAt,
     categoryId: posts.categoryId, authorId: posts.authorId,
     categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
@@ -75,7 +75,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   const body = await req.json()
   const { title, content, excerpt, featuredImageUrl, categoryId, tagIds,
-    status, isFeatured, metaTitle, metaDescription, externalLink } = body
+    status, isFeatured, metaTitle, metaDescription, externalLink, externalLinkText } = body
 
   const readingTime = calculateReadingTime(content || '')
   const autoExcerpt = excerpt || stripHtml(content || '', 200)
@@ -89,6 +89,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
     readingTime, metaTitle: metaTitle || '',
     metaDescription: metaDescription || '',
     externalLink: externalLink || null,
+    externalLinkText: externalLinkText || null,
     publishedAt,
     updatedAt: new Date().toISOString(),
   }).where(eq(posts.id, post.id))

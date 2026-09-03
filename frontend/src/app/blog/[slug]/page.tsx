@@ -43,7 +43,7 @@ export default async function PostDetailPage({ params }: Props) {
     status: posts.status, isFeatured: posts.isFeatured,
     viewsCount: posts.viewsCount, readingTime: posts.readingTime,
     metaTitle: posts.metaTitle, metaDescription: posts.metaDescription,
-    externalLink: posts.externalLink,
+    externalLink: posts.externalLink, externalLinkText: posts.externalLinkText,
     publishedAt: posts.publishedAt, createdAt: posts.createdAt, updatedAt: posts.updatedAt,
     categoryName: categories.name, categorySlug: categories.slug, categoryColor: categories.color,
     authorName: users.username, authorAvatar: users.avatarUrl, authorBio: users.bio,
@@ -124,7 +124,7 @@ export default async function PostDetailPage({ params }: Props) {
           {/* External Link CTA */}
           {post.externalLink && (
             <a href={post.externalLink} target="_blank" rel="noopener noreferrer" className="external-link-btn mb-6" style={{ display: 'inline-flex', marginBottom: '1.5rem' }}>
-              <ExternalLink size={16} /> Read Full Article
+              <ExternalLink size={16} /> {post.externalLinkText || 'Read Full Article'}
             </a>
           )}
 
