@@ -95,12 +95,8 @@ export function PostEditor({ value, onChange, placeholder = 'Start writing your 
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
   })
 
-  // Sync external value changes
-  useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
-      editor.commands.setContent(value, { emitUpdate: false })
-    }
-  }, [value, editor])
+  // Initial content is handled by the `content` prop in useEditor.
+  // We do not sync external value changes to avoid cursor jumping.
 
   const [linkUrl, setLinkUrl] = useState('')
   const [imageUrl, setImageUrl] = useState('')

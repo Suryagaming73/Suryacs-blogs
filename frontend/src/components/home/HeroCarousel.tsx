@@ -27,21 +27,18 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
     if (!posts || posts.length <= 1) return
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % posts.length)
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+        let newScrollLeft = scrollLeft + clientWidth
+        if (newScrollLeft >= scrollWidth - 10) {
+          newScrollLeft = 0
+        }
+        scrollRef.current.scrollTo({ left: newScrollLeft, behavior: 'smooth' })
+      }
     }, 5000)
 
     return () => clearInterval(interval)
   }, [posts])
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      const { clientWidth } = scrollRef.current
-      scrollRef.current.scrollTo({
-        left: currentIndex * clientWidth,
-        behavior: 'smooth'
-      })
-    }
-  }, [currentIndex])
 
   const handleScroll = () => {
     if (scrollRef.current) {
@@ -50,6 +47,12 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
       if (newIndex !== currentIndex) {
         setCurrentIndex(newIndex)
       }
+    }
+  }
+
+  const scrollTo = (index: number) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ left: index * scrollRef.current.clientWidth, behavior: 'smooth' })
     }
   }
 
@@ -105,7 +108,7 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
         {posts.map((_, index) => (
           <button
             key={index}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => scrollTo(index)}
             style={{
               width: '10px',
               height: '10px',
