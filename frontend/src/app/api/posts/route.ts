@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
       .from(postTags)
       .innerJoin(tags, eq(postTags.tagId, tags.id))
       .where(eq(tags.slug, tagSlug))
-    conditions.push(sql`${posts.id} IN ${matchingPostIds}`)
+    conditions.push(sql`${posts.id} IN (${matchingPostIds})`)
   }
 
   const query = db.select({
@@ -73,6 +73,7 @@ export async function GET(req: NextRequest) {
   // Get total count
   const [{ count }] = await db.select({ count: sql<number>`count(*)` })
     .from(posts)
+    .leftJoin(categories, eq(posts.categoryId, categories.id))
     .where(conditions.length ? and(...conditions) : undefined)
 
   return NextResponse.json({ posts: rows, total: count, page, limit })

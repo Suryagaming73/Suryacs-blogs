@@ -1,5 +1,6 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { PostCard } from '@/components/blog/PostCard'
 import { Search, Filter, SlidersHorizontal } from 'lucide-react'
 import Link from 'next/link'
@@ -16,12 +17,13 @@ interface Post {
 interface Category { id: string; name: string; slug: string; color: string }
 interface Tag { id: string; name: string; slug: string }
 
-export default function BlogPage() {
+function BlogContent() {
+  const searchParams = useSearchParams()
   const [posts, setPosts] = useState<Post[]>([])
   const [cats, setCats] = useState<Category[]>([])
   const [tags, setTags] = useState<Tag[]>([])
-  const [search, setSearch] = useState('')
-  const [category, setCategory] = useState('')
+  const [search, setSearch] = useState(searchParams.get('search') || '')
+  const [category, setCategory] = useState(searchParams.get('category') || '')
   const [tag, setTag] = useState('')
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
@@ -140,5 +142,13 @@ export default function BlogPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function BlogPage() {
+  return (
+    <Suspense fallback={<div className="section"><div className="container" style={{ padding: '5rem 0', textAlign: 'center' }}>Loading...</div></div>}>
+      <BlogContent />
+    </Suspense>
   )
 }
