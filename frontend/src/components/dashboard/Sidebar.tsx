@@ -65,8 +65,13 @@ export function Sidebar({ unreadMessages = 0 }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   function isActive(href: string) {
-    if (href === '/dashboard') return pathname === '/dashboard'
-    return pathname.startsWith(href)
+    if (pathname === href) return true
+    if (href === '/dashboard') return false
+    
+    // Special case for 'All Posts' to not be active on 'New Post' page
+    if (href === '/dashboard/posts' && pathname === '/dashboard/posts/new') return false
+    
+    return pathname.startsWith(href + '/')
   }
 
   // Close sidebar on route change on mobile

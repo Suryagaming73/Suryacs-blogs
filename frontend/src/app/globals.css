@@ -732,7 +732,7 @@ textarea.input { resize: vertical; min-height: 120px; }
 .comment-action-btn.danger:hover { color: var(--danger); background: rgba(248,113,113,0.1); }
 
 /* ── Dashboard Layout ─────────────────────────────────────────── */
-.dashboard-layout { display: flex; min-height: 100vh; }
+.dashboard-layout { display: flex; min-height: 100vh; max-width: 1600px; margin: 0 auto; width: 100%; }
 
 .sidebar {
   width: 260px; flex-shrink: 0;
@@ -1039,24 +1039,11 @@ textarea.input { resize: vertical; min-height: 120px; }
   .posts-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
   .dashboard-main { padding: 1.5rem; }
   .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 768px) {
-  .hidden-mobile { display: none !important; }
-  .navbar-links { display: none; }
-  .hamburger { display: flex; }
-  .navbar-links.open {
-    display: flex; flex-direction: column; position: absolute;
-    top: 68px; left: 0; right: 0; background: var(--surface);
-    border-bottom: 1px solid var(--border); padding: 1rem;
-    animation: dropIn 0.2s ease;
-  }
-  .hero { padding: 4rem 0 3rem; }
-  .section { padding: 3rem 0; }
-  .section-sm { padding: 2rem 0; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   
-  /* Mobile Sidebar styling */
+  /* Tablet/Mobile Sidebar styling */
+  .dashboard-layout { 
+    flex-direction: column; 
+  }
   .sidebar { 
     transform: translateX(-100%); 
     position: fixed; 
@@ -1078,6 +1065,27 @@ textarea.input { resize: vertical; min-height: 120px; }
   .mobile-sidebar-header {
     display: flex !important;
   }
+  .hidden-desktop {
+    display: block !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hidden-mobile { display: none !important; }
+  .navbar-links { display: none; }
+  .hamburger { display: flex; }
+  .navbar-links.open {
+    display: flex; flex-direction: column; position: absolute;
+    top: 68px; left: 0; right: 0; background: var(--surface);
+    border-bottom: 1px solid var(--border); padding: 1rem;
+    animation: dropIn 0.2s ease;
+  }
+  .hero { padding: 4rem 0 3rem; }
+  .section { padding: 3rem 0; }
+  .section-sm { padding: 2rem 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  
+
   
   .dashboard-main { padding: 1rem; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
