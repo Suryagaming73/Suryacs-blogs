@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { ArrowRight, Clock, Search } from 'lucide-react'
+import { ArrowRight, Clock, Search, ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface Post {
   id: string
@@ -125,7 +124,7 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
              <div className="hero-card-content" style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '1.25rem' }}>
                 {post.categoryName && (
                   <div>
-                    <span className="badge" style={{ background: post.categoryColor || 'var(--accent-soft)', color: post.categoryColor || 'var(--accent)', border: 'none', padding: '0.4rem 0.8rem', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.5px' }}>
+                    <span className="badge" style={{ background: post.categoryColor || 'var(--accent)', color: 'white', border: 'none', padding: '0.4rem 0.8rem', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.5px' }}>
                       {post.categoryName.toUpperCase()}
                     </span>
                   </div>
@@ -156,20 +155,41 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
         ))}
       </div>
       
-      {/* Navigation Dots */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1rem' }}>
-        {posts.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => scrollTo(index)}
-            style={{
-              width: '10px', height: '10px', borderRadius: '50%', border: 'none',
-              background: index === currentIndex ? 'var(--accent)' : 'var(--border-strong)',
-              cursor: 'pointer', transition: 'background 0.3s ease'
-            }}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+      {/* Navigation Arrows */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1.5rem' }}>
+        <button
+          onClick={() => scrollTo(Math.max(0, currentIndex - 1))}
+          disabled={currentIndex === 0}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: '40px', height: '40px', borderRadius: '50%', border: '1px solid var(--border)',
+            background: 'var(--surface)', color: currentIndex === 0 ? 'var(--text-faint)' : 'var(--text)',
+            cursor: currentIndex === 0 ? 'not-allowed' : 'pointer', transition: 'all 0.3s ease',
+            boxShadow: 'var(--shadow-sm)'
+          }}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        
+        <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+          {currentIndex + 1} / {posts.length}
+        </span>
+        
+        <button
+          onClick={() => scrollTo(Math.min(posts.length - 1, currentIndex + 1))}
+          disabled={currentIndex === posts.length - 1}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            width: '40px', height: '40px', borderRadius: '50%', border: '1px solid var(--border)',
+            background: 'var(--surface)', color: currentIndex === posts.length - 1 ? 'var(--text-faint)' : 'var(--text)',
+            cursor: currentIndex === posts.length - 1 ? 'not-allowed' : 'pointer', transition: 'all 0.3s ease',
+            boxShadow: 'var(--shadow-sm)'
+          }}
+          aria-label="Next slide"
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `

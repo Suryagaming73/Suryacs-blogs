@@ -28,7 +28,7 @@ async function getData() {
     .leftJoin(categories, eq(posts.categoryId, categories.id))
     .where(and(eq(posts.status, 'published'), eq(posts.isFeatured, true)))
     .orderBy(desc(posts.publishedAt))
-    .limit(3),
+    .limit(4),
     
     db.select({
       id: posts.id, title: posts.title, slug: posts.slug, excerpt: posts.excerpt,
@@ -54,7 +54,13 @@ async function getData() {
 
 export default async function HomePage() {
   const { featured, latest, categories: cats, totalPosts } = await getData()
-  const heroPosts = featured.length > 0 ? featured : latest.slice(0, 3)
+  
+  // Ensure we always have up to 4 posts for the hero carousel
+  let heroPosts = [...featured]
+  if (heroPosts.length < 4) {
+    const additionalPosts = latest.filter(p => !heroPosts.some(hp => hp.id === p.id))
+    heroPosts = [...heroPosts, ...additionalPosts].slice(0, 4)
+  }
 
   return (
     <>
