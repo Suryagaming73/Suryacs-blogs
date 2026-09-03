@@ -12,7 +12,7 @@ export default function AdminServicesPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    fetch('/api/services').then(r => r.json()).then(d => { setServices(d.services || []); setLoading(false) })
+    fetch('/api/services').then(r => r.json()).then(d => { setServices(d.services || []); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   function set(k: string, v: any) { setForm(f => ({ ...f, [k]: v })) }

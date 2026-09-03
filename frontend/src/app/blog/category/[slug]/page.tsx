@@ -48,15 +48,20 @@ export default function CategoryPage() {
 
   const fetchPosts = useCallback(async () => {
     setLoading(true)
-    const urlParams = new URLSearchParams({ page: String(page), limit: String(LIMIT) })
-    if (search) urlParams.set('search', search)
-    urlParams.set('category', slug)
-    if (tag) urlParams.set('tag', tag)
-    const res = await fetch(`/api/posts?${urlParams}`)
-    const data = await res.json()
-    setPosts(data.posts || [])
-    setTotal(data.total || 0)
-    setLoading(false)
+    try {
+      const urlParams = new URLSearchParams({ page: String(page), limit: String(LIMIT) })
+      if (search) urlParams.set('search', search)
+      urlParams.set('category', slug)
+      if (tag) urlParams.set('tag', tag)
+      const res = await fetch(`/api/posts?${urlParams}`)
+      const data = await res.json()
+      setPosts(data.posts || [])
+      setTotal(data.total || 0)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }, [search, tag, page, slug])
 
   useEffect(() => { fetchPosts() }, [fetchPosts])

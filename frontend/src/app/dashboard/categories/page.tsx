@@ -13,7 +13,7 @@ export default function AdminCategoriesPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    fetch('/api/categories').then(r => r.json()).then(d => { setCats(d.categories || []); setLoading(false) })
+    fetch('/api/categories').then(r => r.json()).then(d => { setCats(d.categories || []); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   function set(k: string, v: any) { setForm(f => ({ ...f, [k]: v })) }

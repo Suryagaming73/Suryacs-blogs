@@ -12,7 +12,7 @@ export default function AdminMessagesPage() {
   const [selected, setSelected] = useState<Message | null>(null)
 
   useEffect(() => {
-    fetch('/api/dashboard/messages').then(r => r.json()).then(d => { setMessages(d.messages || []); setLoading(false) })
+    fetch('/api/dashboard/messages').then(r => r.json()).then(d => { setMessages(d.messages || []); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   async function markRead(id: string) {

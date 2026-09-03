@@ -11,7 +11,7 @@ export default function AdminTagsPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    fetch('/api/tags').then(r => r.json()).then(d => { setTags(d.tags || []); setLoading(false) })
+    fetch('/api/tags').then(r => r.json()).then(d => { setTags(d.tags || []); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   async function save() {

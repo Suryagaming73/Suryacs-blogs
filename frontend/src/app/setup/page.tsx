@@ -21,14 +21,19 @@ export default function SetupPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(''); setLoading(true)
-    const res = await fetch('/api/setup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
-    const data = await res.json()
-    setLoading(false)
-    if (res.ok) {
-      setSuccess(true)
-      setTimeout(() => router.push('/auth/login'), 2000)
-    } else {
-      setError(data.error || 'Setup failed')
+    try {
+      const res = await fetch('/api/setup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(form) })
+      const data = await res.json()
+      if (res.ok) {
+        setSuccess(true)
+        setTimeout(() => router.push('/auth/login'), 2000)
+      } else {
+        setError(data.error || 'Setup failed')
+      }
+    } catch (err) {
+      setError('Network error or invalid response')
+    } finally {
+      setLoading(false)
     }
   }
 

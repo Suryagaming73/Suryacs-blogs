@@ -10,7 +10,7 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/dashboard/users').then(r => r.json()).then(d => { setUsers(d.users || []); setLoading(false) })
+    fetch('/api/dashboard/users').then(r => r.json()).then(d => { setUsers(d.users || []); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   async function del(id: string, username: string) {

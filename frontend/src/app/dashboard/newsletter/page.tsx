@@ -9,7 +9,7 @@ export default function AdminNewsletterPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/dashboard/newsletter').then(r => r.json()).then(d => { setSubs(d.subscribers || []); setLoading(false) })
+    fetch('/api/dashboard/newsletter').then(r => r.json()).then(d => { setSubs(d.subscribers || []); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   async function del(id: string) {

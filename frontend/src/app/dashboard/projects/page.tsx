@@ -12,7 +12,7 @@ export default function AdminProjectsPage() {
   const [saving, setSaving] = useState(false)
 
   useEffect(() => {
-    fetch('/api/projects').then(r => r.json()).then(d => { setProjects(d.projects || []); setLoading(false) })
+    fetch('/api/projects').then(r => r.json()).then(d => { setProjects(d.projects || []); setLoading(false) }).catch(() => setLoading(false))
   }, [])
 
   function set(k: string, v: any) { setForm(f => ({ ...f, [k]: v })) }

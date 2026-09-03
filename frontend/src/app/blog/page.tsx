@@ -37,15 +37,20 @@ function BlogContent() {
 
   const fetchPosts = useCallback(async () => {
     setLoading(true)
-    const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) })
-    if (search) params.set('search', search)
-    if (category) params.set('category', category)
-    if (tag) params.set('tag', tag)
-    const res = await fetch(`/api/posts?${params}`)
-    const data = await res.json()
-    setPosts(data.posts || [])
-    setTotal(data.total || 0)
-    setLoading(false)
+    try {
+      const params = new URLSearchParams({ page: String(page), limit: String(LIMIT) })
+      if (search) params.set('search', search)
+      if (category) params.set('category', category)
+      if (tag) params.set('tag', tag)
+      const res = await fetch(`/api/posts?${params}`)
+      const data = await res.json()
+      setPosts(data.posts || [])
+      setTotal(data.total || 0)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }, [search, category, tag, page])
 
   useEffect(() => { fetchPosts() }, [fetchPosts])
