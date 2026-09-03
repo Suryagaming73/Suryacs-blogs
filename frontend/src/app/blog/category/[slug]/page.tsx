@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { PostCard } from '@/components/blog/PostCard'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 interface Post {
   id: string; title: string; slug: string; excerpt?: string | null;
@@ -17,13 +17,16 @@ interface Post {
 interface Category { id: string; name: string; slug: string; color: string }
 interface Tag { id: string; name: string; slug: string }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+export default function CategoryPage() {
   const router = useRouter()
+  const params = useParams()
+  const slug = params.slug as string
+  
   const [posts, setPosts] = useState<Post[]>([])
   const [cats, setCats] = useState<Category[]>([])
   const [tags, setTags] = useState<Tag[]>([])
   const [search, setSearch] = useState('')
-  const [category, setCategory] = useState(params.slug)
+  const [category, setCategory] = useState(slug)
   const [tag, setTag] = useState('')
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
@@ -36,31 +39,31 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
   }, [])
 
   useEffect(() => {
-    if (category && category !== params.slug) {
+    if (category && category !== slug) {
       router.push(`/blog/category/${category}`)
-    } else if (category === '' && params.slug) {
+    } else if (category === '' && slug) {
       router.push(`/blog`)
     }
-  }, [category, params.slug, router])
+  }, [category, slug, router])
 
   const fetchPosts = useCallback(async () => {
     setLoading(true)
     const urlParams = new URLSearchParams({ page: String(page), limit: String(LIMIT) })
     if (search) urlParams.set('search', search)
-    urlParams.set('category', params.slug)
+    urlParams.set('category', slug)
     if (tag) urlParams.set('tag', tag)
     const res = await fetch(`/api/posts?${urlParams}`)
     const data = await res.json()
     setPosts(data.posts || [])
     setTotal(data.total || 0)
     setLoading(false)
-  }, [search, tag, page, params.slug])
+  }, [search, tag, page, slug])
 
   useEffect(() => { fetchPosts() }, [fetchPosts])
 
   const totalPages = Math.ceil(total / LIMIT)
   
-  const currentCategory = cats.find(c => c.slug === params.slug)
+  const currentCategory = cats.find(c => c.slug === slug)
 
   return (
     <div className="section">
