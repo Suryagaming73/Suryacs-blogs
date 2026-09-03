@@ -31,7 +31,7 @@ export function Logo({ className, style }: { className?: string, style?: React.C
       <text x="180" y="36" fontFamily="system-ui, -apple-system, sans-serif" fontSize="24" fontWeight="800" fill="url(#primaryGradLogo)" letterSpacing="0.5">Blogs</text>
       
       {/* Subtle tagline */}
-      <text x="72" y="50" fontFamily="system-ui, -apple-system, sans-serif" fontSize="8.5" fontWeight="600" fill="var(--text-muted)" letterSpacing="1.5" textTransform="uppercase">Full Stack Web Solutions</text>
+      <text x="72" y="50" fontFamily="system-ui, -apple-system, sans-serif" fontSize="8.5" fontWeight="600" fill="var(--text-muted)" letterSpacing="1.5" style={{ textTransform: 'uppercase' }}>Full Stack Web Solutions</text>
     </svg>
   )
 }
