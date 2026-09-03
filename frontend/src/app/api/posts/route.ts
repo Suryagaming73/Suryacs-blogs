@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { db } from '@/db'
 import { posts, categories, tags, postTags, users } from '@/db/schema'
 import { eq, desc, and, like, or, sql } from 'drizzle-orm'
@@ -125,6 +126,8 @@ export async function POST(req: NextRequest) {
         tagIds.map((tagId: string) => ({ postId: post.id, tagId }))
       )
     }
+
+    revalidatePath('/', 'layout')
 
     return NextResponse.json({ post }, { status: 201 })
   } catch (err) {

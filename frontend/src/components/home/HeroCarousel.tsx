@@ -149,25 +149,29 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
       </div>
 
       {/* Search Overlay */}
-      <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10, width: 'min(100%, 350px)' }} className="hidden-mobile">
-        <form action="/blog" method="GET" style={{ 
-          display: 'flex', gap: '0.5rem', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', padding: '0.5rem', 
-          borderRadius: '99px', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
-        }}>
-          <input 
-            type="text" 
-            name="search" 
-            placeholder="Search articles..." 
-            style={{ 
-              flex: 1, background: 'transparent', border: 'none', padding: '0.5rem 1rem',
-              color: 'white', outline: 'none', fontSize: '0.95rem', width: '100%'
-            }}
-            className="hero-search-input"
-          />
-          <button type="submit" className="btn btn-primary btn-sm" style={{ borderRadius: '99px', padding: '0 1rem', background: 'white', color: 'black' }}>
-            <Search size={14} />
-          </button>
-        </form>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 10 }}>
+        <div style={{ width: '100%', maxWidth: '1200px', padding: '1.5rem', display: 'flex', justifyContent: 'flex-end' }}>
+          <div className="hidden-mobile" style={{ width: 'min(100%, 350px)' }}>
+            <form action="/blog" method="GET" style={{ 
+              display: 'flex', gap: '0.5rem', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', padding: '0.5rem', 
+              borderRadius: '99px', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+            }}>
+              <input 
+                type="text" 
+                name="search" 
+                placeholder="Search articles..." 
+                style={{ 
+                  flex: 1, background: 'transparent', border: 'none', padding: '0.5rem 1rem',
+                  color: 'white', outline: 'none', fontSize: '0.95rem', width: '100%'
+                }}
+                className="hero-search-input"
+              />
+              <button type="submit" className="btn btn-primary btn-sm" style={{ borderRadius: '99px', padding: '0 1rem', background: 'white', color: 'black' }}>
+                <Search size={14} />
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
       
       <style dangerouslySetInnerHTML={{__html: `

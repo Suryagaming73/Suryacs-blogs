@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { db } from '@/db'
 import { posts, categories, tags, postTags, users, comments, postLikes } from '@/db/schema'
 import { eq, and, sql } from 'drizzle-orm'
@@ -102,6 +103,9 @@ export async function PUT(req: NextRequest, { params }: Params) {
   }
 
   const updated = await db.select().from(posts).where(eq(posts.id, post.id)).get()
+  
+  revalidatePath('/', 'layout')
+  
   return NextResponse.json({ post: updated })
 }
 
