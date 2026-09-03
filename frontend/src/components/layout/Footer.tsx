@@ -55,7 +55,7 @@ export function Footer() {
   const [email, setEmail] = useState('')
   const [msg, setMsg] = useState('')
   const [loading, setLoading] = useState(false)
-  const [settings, setSettings] = useState<any>({})
+  const [settings, setSettings] = useState<Record<string, string>>({})
 
   useEffect(() => {
     fetch('/api/settings')

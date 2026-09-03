@@ -15,11 +15,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // Read from localStorage or system preference
     const stored = localStorage.getItem('blogcraft-theme') as Theme | null
     if (stored) {
-      setTheme(stored)
+      setTimeout(() => setTheme(stored), 0)
       document.documentElement.setAttribute('data-theme', stored)
     } else {
       const system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-      setTheme(system)
+      setTimeout(() => setTheme(system), 0)
       document.documentElement.setAttribute('data-theme', system)
     }
   }, [])

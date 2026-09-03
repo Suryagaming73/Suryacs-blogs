@@ -71,7 +71,7 @@ export function Sidebar({ unreadMessages = 0 }: SidebarProps) {
 
   // Close sidebar on route change on mobile
   useEffect(() => {
-    setIsOpen(false)
+    setTimeout(() => setIsOpen(false), 0)
   }, [pathname])
 
   return (

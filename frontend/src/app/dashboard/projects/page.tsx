@@ -80,7 +80,7 @@ export default function AdminProjectsPage() {
                       </div>
                     </td>
                     <td className="text-sm text-muted" style={{ maxWidth: 200, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.tech}</td>
-                    <td className="text-muted text-sm">{p.order}</td>
+                    <td className="py-3 px-4 text-muted text-sm">{p.order}</td>
                     <td>
                       <div className="flex gap-2">
                         <button className="btn btn-ghost btn-sm btn-icon" onClick={() => startEdit(p)} title="Edit"><Edit size={14} /></button>

@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
     conditions.push(sql`${posts.id} IN ${matchingPostIds}`)
   }
 
-  let query = db.select({
+  const query = db.select({
     id: posts.id,
     title: posts.title,
     slug: posts.slug,

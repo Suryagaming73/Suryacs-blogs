@@ -55,7 +55,7 @@ export function PostEditor({ value, onChange, placeholder = 'Start writing your 
     editorProps: {
       handleDrop: function(view, event, slice, moved) {
         if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
-          let file = event.dataTransfer.files[0]
+          const file = event.dataTransfer.files[0]
           if (file.type.startsWith('image/')) {
             const reader = new FileReader()
             reader.onload = (e) => {
@@ -74,7 +74,7 @@ export function PostEditor({ value, onChange, placeholder = 'Start writing your 
       },
       handlePaste: function(view, event, slice) {
         if (event.clipboardData && event.clipboardData.files && event.clipboardData.files[0]) {
-          let file = event.clipboardData.files[0]
+          const file = event.clipboardData.files[0]
           if (file.type.startsWith('image/')) {
             const reader = new FileReader()
             reader.onload = (e) => {

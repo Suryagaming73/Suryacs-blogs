@@ -20,7 +20,7 @@ export function Navbar() {
   const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const user = session?.user as any
+  const user = session?.user as { name?: string | null, email?: string | null, image?: string | null, role?: string | null } | undefined
 
   return (
     <nav className="navbar" role="navigation" aria-label="Main navigation">

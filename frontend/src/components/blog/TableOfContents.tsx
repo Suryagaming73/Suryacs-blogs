@@ -26,7 +26,7 @@ export function TableOfContents() {
       }
     })
     
-    setHeadings(newHeadings)
+    setTimeout(() => setHeadings(newHeadings), 0)
 
     const observer = new IntersectionObserver(
       (entries) => {

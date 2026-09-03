@@ -52,7 +52,7 @@ export function PostForm({ initialData, mode, slug }: PostFormProps) {
     fetch('/api/tags').then(r => r.json()).then(d => setTags(d.tags || []))
   }, [])
 
-  function set(k: string, v: any) { setForm(f => ({ ...f, [k]: v })) }
+  function set(k: string, v: string | boolean | string[]) { setForm(f => ({ ...f, [k]: v })) }
 
   function toggleTag(id: string) {
     setForm(f => ({
