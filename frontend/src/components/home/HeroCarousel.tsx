@@ -80,7 +80,9 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
         {posts.map((post, index) => (
           <div key={post.id} style={{ scrollSnapAlign: 'start', flex: '0 0 100%', width: '100%', height: '100%', position: 'relative' }}>
              {post.featuredImageUrl ? (
-               <img src={post.featuredImageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
+               <div style={{ width: '100%', height: '100%', background: '#0a0a0f' }}>
+                 <img src={post.featuredImageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', display: 'block' }} />
+               </div>
              ) : (
                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, var(--accent) 0%, #341f97 100%)' }} />
              )}

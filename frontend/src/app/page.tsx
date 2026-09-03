@@ -5,6 +5,7 @@ import { posts, categories, postLikes } from '@/db/schema'
 import { eq, desc, sql, and } from 'drizzle-orm'
 import { PostCard } from '@/components/blog/PostCard'
 import { HeroCarousel } from '@/components/home/HeroCarousel'
+import { NewsletterForm } from '@/components/home/NewsletterForm'
 import { ArrowRight, Sparkles, TrendingUp, Zap, Mail, Clock, Search } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
 
@@ -113,10 +114,7 @@ export default async function HomePage() {
             <p className="section-desc" style={{ marginBottom: '2rem' }}>
               Get the latest articles, tutorials, and tech news delivered straight to your inbox. No spam, just high-quality content.
             </p>
-            <form action="/api/newsletter" method="POST" style={{ display: 'flex', gap: '0.5rem', maxWidth: '400px', margin: '0 auto', flexWrap: 'wrap' }}>
-              <input type="email" name="email" placeholder="Enter your email address" required style={{ flex: '1 1 200px', padding: '0.75rem 1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', background: 'var(--bg)' }} />
-              <button type="submit" className="btn btn-primary" style={{ flex: '1 1 120px' }}>Subscribe</button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
       </section>
