@@ -5,6 +5,7 @@ import { useSession, signOut } from 'next-auth/react'
 import { useTheme } from './ThemeProvider'
 import { Sun, Moon, LayoutDashboard, LogOut, User, Menu, X, BookOpen } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
+import { Logo } from './Logo'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -43,7 +44,9 @@ export function Navbar() {
       <div className="navbar-inner">
         {/* Logo */}
         <Link href="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
-          <img src="/logo.svg" alt="Suryacs-Blogs" style={{ height: '36px', width: 'auto' }} />
+          <div style={{ height: '36px', width: '150px' }}>
+            <Logo />
+          </div>
         </Link>
 
         {/* Desktop Links */}
