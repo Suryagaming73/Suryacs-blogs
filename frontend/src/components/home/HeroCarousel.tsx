@@ -71,33 +71,56 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
              ) : (
                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, var(--accent) 0%, #341f97 100%)' }} />
              )}
-             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.1) 100%)' }} />
-             <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: 'clamp(1.5rem, 5vw, 4rem)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {post.categoryName && (
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <span className="badge" style={{ background: post.categoryColor || 'var(--accent)', color: 'white', border: 'none', padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>
-                      {post.categoryName}
-                    </span>
-                  </div>
-                )}
-                <h1 style={{ color: 'white', fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 800, margin: 0, lineHeight: 1.1, textShadow: '0 2px 10px rgba(0,0,0,0.3)', maxWidth: '800px' }}>
-                  {post.title}
-                </h1>
-                {post.excerpt && (
-                  <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 'clamp(1rem, 2vw, 1.25rem)', maxWidth: '700px', margin: 0, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    {post.excerpt}
-                  </p>
-                )}
-                <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <Link href={`/blog/${post.slug}`} className="btn btn-primary" style={{ padding: '0.75rem 1.5rem', fontSize: '1rem', borderRadius: '99px' }}>
-                    Read Article <ArrowRight size={18} />
-                  </Link>
-                  {post.readingTime && (
-                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                      <Clock size={14} /> {post.readingTime} min read
-                    </span>
+             
+             {/* Subtle overall gradient to ensure the image isn't too bright */}
+             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%)' }} />
+             
+             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: 'clamp(1.5rem, 5vw, 4rem)' }}>
+               {/* Premium Glassmorphic Card */}
+               <div style={{ 
+                 background: 'rgba(10, 10, 15, 0.85)', 
+                 backdropFilter: 'blur(20px)',
+                 WebkitBackdropFilter: 'blur(20px)',
+                 padding: 'clamp(1.5rem, 4vw, 3rem)', 
+                 borderRadius: '1.5rem',
+                 border: '1px solid rgba(255,255,255,0.08)',
+                 maxWidth: '650px',
+                 width: '100%',
+                 display: 'flex', 
+                 flexDirection: 'column', 
+                 gap: '1rem',
+                 boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                 transform: 'translateY(0)', // for hardware acceleration
+               }}>
+                  {post.categoryName && (
+                    <div style={{ display: 'flex' }}>
+                      <span className="badge" style={{ background: post.categoryColor || 'var(--accent)', color: 'white', border: 'none', padding: '0.4rem 0.8rem', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.5px' }}>
+                        {post.categoryName.toUpperCase()}
+                      </span>
+                    </div>
                   )}
-                </div>
+                  
+                  <h1 style={{ color: 'white', fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', fontWeight: 800, margin: 0, lineHeight: 1.15, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                    {post.title}
+                  </h1>
+                  
+                  {post.excerpt && (
+                    <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)', margin: 0, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>
+                      {post.excerpt}
+                    </p>
+                  )}
+                  
+                  <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+                    <Link href={`/blog/${post.slug}`} className="btn btn-primary" style={{ padding: '0.8rem 1.75rem', fontSize: '0.95rem', borderRadius: '99px', fontWeight: 600, boxShadow: '0 8px 20px rgba(var(--accent-rgb), 0.3)' }}>
+                      Read Article <ArrowRight size={18} />
+                    </Link>
+                    {post.readingTime && (
+                      <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 500 }}>
+                        <Clock size={15} /> {post.readingTime} min read
+                      </span>
+                    )}
+                  </div>
+               </div>
              </div>
           </div>
         ))}
