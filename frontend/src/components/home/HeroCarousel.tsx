@@ -112,12 +112,16 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
              <div className="hero-card-img-wrap" style={{ 
                flex: '1.2', background: 'var(--surface-2)', 
                display: 'flex', alignItems: 'center', justifyContent: 'center',
-               position: 'relative'
+               position: 'relative',
+               transform: 'translateZ(0)',
+               willChange: 'transform'
              }}>
                {post.featuredImageUrl ? (
-                 <img src={post.featuredImageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', borderRadius: '12px', boxShadow: 'var(--shadow-sm)' }} />
+                 <div style={{ width: '100%', height: '100%', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', transform: 'translateZ(0)' }}>
+                   <img src={post.featuredImageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+                 </div>
                ) : (
-                 <div style={{ width: '100%', height: '100%', background: 'var(--gradient)', borderRadius: '12px' }} />
+                 <div style={{ width: '100%', height: '100%', background: 'var(--gradient)', borderRadius: '12px', transform: 'translateZ(0)' }} />
                )}
              </div>
              
