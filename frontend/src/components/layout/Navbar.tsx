@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
 import { useTheme } from './ThemeProvider'
@@ -18,10 +18,28 @@ export function Navbar() {
   const { theme, toggleTheme } = useTheme()
   const [menuOpen, setMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const userMenuRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLElement>(null)
+  
   const user = session?.user as { name?: string | null, email?: string | null, image?: string | null, role?: string | null } | undefined
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false)
+      }
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    if (userMenuOpen || menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [userMenuOpen, menuOpen])
+
   return (
-    <nav className="navbar" role="navigation" aria-label="Main navigation">
+    <nav className="navbar" role="navigation" aria-label="Main navigation" ref={navRef}>
       <div className="navbar-inner">
         {/* Logo */}
         <Link href="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
@@ -59,7 +77,7 @@ export function Navbar() {
 
           {/* Auth */}
           {session ? (
-            <div className="user-menu">
+            <div className="user-menu" ref={userMenuRef}>
               <button
                 className="user-menu-trigger"
                 onClick={() => setUserMenuOpen(v => !v)}
