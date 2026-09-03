@@ -4,7 +4,7 @@ import { db } from '@/db'
 import { posts, categories, postLikes } from '@/db/schema'
 import { eq, desc, sql, and } from 'drizzle-orm'
 import { PostCard } from '@/components/blog/PostCard'
-import { ArrowRight, Sparkles, TrendingUp, Zap, Mail } from 'lucide-react'
+import { ArrowRight, Sparkles, TrendingUp, Zap, Mail, Clock, Search } from 'lucide-react'
 import { formatNumber } from '@/lib/utils'
 
 export const metadata: Metadata = {
@@ -50,85 +50,82 @@ async function getData() {
 
 export default async function HomePage() {
   const { featured, latest, categories: cats, totalPosts } = await getData()
+  const heroPosts = featured.length > 0 ? featured : latest.slice(0, 3)
 
   return (
     <>
-      {/* ── Hero ─────────────────────────── */}
-      <section className="hero">
-        <div className="hero-bg" />
+      {/* ── Hero Carousel ─────────────────────────── */}
+      <section style={{ padding: '2rem 0', background: 'var(--bg)' }}>
         <div className="container">
-          <div className="hero-content" style={{ maxWidth: 700, margin: '0 auto' }}>
-            <div className="hero-eyebrow">
-              <Sparkles size={14} /> Blog & Insights
-            </div>
-            <h1 className="hero-title" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
-              Explore <span className="gradient-text">Articles</span>
-            </h1>
-            <p className="hero-desc" style={{ marginBottom: '2.5rem' }}>
-              Discover the latest in full-stack web development, dynamic platforms, and intelligent digital solutions.
-            </p>
-            
-            <form action="/blog" method="GET" style={{ 
-              display: 'flex', gap: '0.5rem', background: 'var(--surface)', padding: '0.5rem', 
-              borderRadius: '999px', border: '1px solid var(--border-strong)', boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
-              position: 'relative'
-            }}>
-              <input 
-                type="text" 
-                name="search" 
-                placeholder="Search articles, tutorials, and insights..." 
-                style={{ 
-                  flex: 1, background: 'transparent', border: 'none', padding: '0.5rem 1rem 0.5rem 1.5rem',
-                  color: 'var(--text)', outline: 'none', fontSize: '1rem', width: '100%'
-                }}
-              />
-              <button type="submit" className="btn btn-primary" style={{ borderRadius: '999px', padding: '0 1.5rem' }}>
-                Search
-              </button>
-            </form>
-
-            {/* Quick stats */}
-            <div className="flex items-center justify-center gap-8 mt-8" style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-              <div className="flex items-center gap-2">
-                <TrendingUp size={16} style={{ color: 'var(--accent)' }} />
-                <strong style={{ color: 'var(--text)' }}>{formatNumber(totalPosts)}</strong> articles published
-              </div>
-              {cats.length > 0 && (
-                <div className="flex items-center gap-2">
-                  <Sparkles size={16} style={{ color: 'var(--accent)' }} />
-                  <strong style={{ color: 'var(--text)' }}>{cats.length}</strong> categories
+          <div style={{ position: 'relative', width: '100%', height: 'clamp(400px, 65vh, 600px)', borderRadius: '1.5rem', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
+            <div className="hero-carousel-scroll" style={{ display: 'flex', overflowX: 'auto', scrollSnapType: 'x mandatory', height: '100%' }}>
+              {heroPosts.map(post => (
+                <div key={post.id} style={{ scrollSnapAlign: 'start', flex: '0 0 100%', width: '100%', height: '100%', position: 'relative' }}>
+                   {post.featuredImageUrl ? (
+                     <img src={post.featuredImageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                   ) : (
+                     <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, var(--accent) 0%, #341f97 100%)' }} />
+                   )}
+                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.1) 100%)' }} />
+                   <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', padding: 'clamp(1.5rem, 5vw, 4rem)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      {post.categoryName && (
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <span className="badge" style={{ background: post.categoryColor || 'var(--accent)', color: 'white', border: 'none', padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}>
+                            {post.categoryName}
+                          </span>
+                        </div>
+                      )}
+                      <h1 style={{ color: 'white', fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 800, margin: 0, lineHeight: 1.1, textShadow: '0 2px 10px rgba(0,0,0,0.3)', maxWidth: '800px' }}>
+                        {post.title}
+                      </h1>
+                      {post.excerpt && (
+                        <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 'clamp(1rem, 2vw, 1.25rem)', maxWidth: '700px', margin: 0, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                          {post.excerpt}
+                        </p>
+                      )}
+                      <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <Link href={`/blog/${post.slug}`} className="btn btn-primary" style={{ padding: '0.75rem 1.5rem', fontSize: '1rem', borderRadius: '99px' }}>
+                          Read Article <ArrowRight size={18} />
+                        </Link>
+                        {post.readingTime && (
+                          <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                            <Clock size={14} /> {post.readingTime} min read
+                          </span>
+                        )}
+                      </div>
+                   </div>
                 </div>
-              )}
+              ))}
+            </div>
+            {/* Search Overlay */}
+            <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10, width: 'min(100%, 350px)' }} className="hidden-mobile">
+              <form action="/blog" method="GET" style={{ 
+                display: 'flex', gap: '0.5rem', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', padding: '0.5rem', 
+                borderRadius: '99px', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+              }}>
+                <input 
+                  type="text" 
+                  name="search" 
+                  placeholder="Search articles..." 
+                  style={{ 
+                    flex: 1, background: 'transparent', border: 'none', padding: '0.5rem 1rem',
+                    color: 'white', outline: 'none', fontSize: '0.95rem', width: '100%'
+                  }}
+                  className="hero-search-input"
+                />
+                <button type="submit" className="btn btn-primary btn-sm" style={{ borderRadius: '99px', padding: '0 1rem', background: 'white', color: 'black' }}>
+                  <Search size={14} />
+                </button>
+              </form>
             </div>
           </div>
         </div>
       </section>
-
-      {/* ── Featured Posts (Carousel) ─────────────────── */}
-      {featured.length > 0 && (
-        <section className="section">
-          <div className="container">
-            <div className="section-header">
-              <div className="section-tag"><Sparkles size={12} /> Featured</div>
-              <h2 className="section-title font-heading">Editor&apos;s Picks</h2>
-              <p className="section-desc">Hand-picked stories we think you&apos;ll love</p>
-            </div>
-            <div className="posts-carousel" style={{ 
-              display: 'flex', overflowX: 'auto', gap: '1.5rem', paddingBottom: '1.5rem',
-              scrollSnapType: 'x mandatory', scrollbarWidth: 'none', msOverflowStyle: 'none'
-            }}>
-              {featured.map(p => (
-                <div key={p.id} style={{ scrollSnapAlign: 'start', flex: '0 0 calc(85vw)', maxWidth: '400px', minWidth: '300px' }}>
-                  <PostCard post={p} />
-                </div>
-              ))}
-            </div>
-            <style dangerouslySetInnerHTML={{__html: `
-              .posts-carousel::-webkit-scrollbar { display: none; }
-            `}} />
-          </div>
-        </section>
-      )}
+      <style dangerouslySetInnerHTML={{__html: `
+        .hero-carousel-scroll::-webkit-scrollbar { display: none; }
+        .hero-search-input::placeholder { color: rgba(255,255,255,0.7); }
+        @media (max-width: 768px) { .hidden-mobile { display: none !important; } }
+      `}} />
 
       {/* ── Latest Posts ────────────────────── */}
       <section className="section" style={{ background: 'var(--bg-alt)' }}>
