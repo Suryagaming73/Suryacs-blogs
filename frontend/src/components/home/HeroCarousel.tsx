@@ -57,7 +57,7 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: 'clamp(400px, 65vh, 600px)', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
+    <div style={{ position: 'relative', width: '100%', height: 'clamp(500px, 80vh, 900px)', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
       <div 
         ref={scrollRef}
         onScroll={handleScroll}
@@ -67,7 +67,7 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
         {posts.map((post, index) => (
           <div key={post.id} style={{ scrollSnapAlign: 'start', flex: '0 0 100%', width: '100%', height: '100%', position: 'relative' }}>
              {post.featuredImageUrl ? (
-               <img src={post.featuredImageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+               <img src={post.featuredImageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
              ) : (
                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, var(--accent) 0%, #341f97 100%)' }} />
              )}
