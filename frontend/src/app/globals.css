@@ -1038,6 +1038,7 @@ textarea.input { resize: vertical; min-height: 120px; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .posts-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
   .dashboard-main { padding: 1.5rem; }
+  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -1052,6 +1053,7 @@ textarea.input { resize: vertical; min-height: 120px; }
   }
   .hero { padding: 4rem 0 3rem; }
   .section { padding: 3rem 0; }
+  .section-sm { padding: 2rem 0; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   
   /* Mobile Sidebar styling */
@@ -1079,14 +1081,18 @@ textarea.input { resize: vertical; min-height: 120px; }
   
   .dashboard-main { padding: 1rem; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-cols-3 { grid-template-columns: 1fr; }
   .grid-cols-2 { grid-template-columns: 1fr; }
   .auth-card { padding: 1.75rem 1.25rem; }
+  .post-detail { padding: 1rem 0 2rem; }
+  .post-detail-meta { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
 }
 
 @media (max-width: 480px) {
   .container, .container-sm { padding: 0 1rem; }
   .stats-grid { grid-template-columns: 1fr; }
+  .grid-cols-4 { grid-template-columns: 1fr; }
   .hero-title { font-size: 2.25rem; }
   .post-actions-bar { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
 }

@@ -81,8 +81,8 @@ export default async function PostDetailPage({ params }: Props) {
   return (
     <>
       <ReadingProgress />
-      <div className="container" style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start', justifyContent: 'center' }}>
-        <article className="post-detail" style={{ flex: 1, minWidth: 0, width: '100%' }}>
+      <div className="container" style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <article className="post-detail" style={{ flex: '1 1 0%', minWidth: 'min(100%, 780px)', width: '100%' }}>
           {/* Back */}
           <Link href="/blog" className="btn btn-ghost btn-sm mb-6" style={{ display: 'inline-flex', marginTop: '1.5rem' }}>
             <ArrowLeft size={15} /> Back to Blog

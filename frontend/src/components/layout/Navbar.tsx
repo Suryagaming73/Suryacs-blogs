@@ -103,7 +103,6 @@ export function Navbar() {
 
           {/* Mobile hamburger */}
           <button className="hamburger" onClick={() => setMenuOpen(v => !v)} aria-label="Toggle menu" id="hamburger-btn">
-            {menuOpen ? <><span /><span /><span /></> : <><span /><span /><span /></>}
             {menuOpen ? <X size={20} color="var(--text)" /> : <Menu size={20} color="var(--text)" />}
           </button>
         </div>
