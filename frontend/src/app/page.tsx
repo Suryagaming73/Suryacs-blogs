@@ -56,10 +56,8 @@ export default async function HomePage() {
   return (
     <>
       {/* ── Hero Carousel ─────────────────────────── */}
-      <section style={{ padding: '2rem 0', background: 'var(--bg)' }}>
-        <div className="container">
-          <HeroCarousel posts={heroPosts as any} />
-        </div>
+      <section style={{ background: 'var(--bg)', paddingBottom: '2rem' }}>
+        <HeroCarousel posts={heroPosts as any} />
       </section>
 
       {/* ── Latest Posts ────────────────────── */}
