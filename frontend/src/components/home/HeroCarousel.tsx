@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ArrowRight, Clock, Search } from 'lucide-react'
 
 interface Post {
@@ -20,8 +21,20 @@ interface HeroCarouselProps {
 }
 
 export function HeroCarousel({ posts }: HeroCarouselProps) {
+  const router = useRouter()
   const scrollRef = useRef<HTMLDivElement>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const search = formData.get('search') as string
+    if (search) {
+      router.push(`/blog?search=${encodeURIComponent(search)}`)
+    } else {
+      router.push(`/blog`)
+    }
+  }
 
   useEffect(() => {
     if (!posts || posts.length <= 1) return
@@ -147,7 +160,7 @@ export function HeroCarousel({ posts }: HeroCarouselProps) {
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 10 }}>
         <div style={{ width: '100%', maxWidth: '1200px', padding: '1.5rem', display: 'flex', justifyContent: 'flex-end' }}>
           <div className="hidden-mobile" style={{ width: 'min(100%, 350px)' }}>
-            <form action="/blog" method="GET" style={{ 
+            <form onSubmit={handleSearch} style={{ 
               display: 'flex', gap: '0.5rem', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', padding: '0.5rem', 
               borderRadius: '99px', border: '1px solid rgba(255,255,255,0.2)', boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
             }}>
